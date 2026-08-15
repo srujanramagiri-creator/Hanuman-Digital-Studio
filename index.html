@@ -4,9 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#f6f0e6" id="themeColorMeta">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Hanuman Digital Studio">
 <title>Hanuman Digital Studio — Premium Web Apps &amp; 3D Experiences</title>
 <meta name="description" content="Hanuman Digital Studio builds premium, hand-coded websites, admin panels and AI tools for local businesses — cinematic 3D experiences, not templates.">
+<link rel="canonical" href="https://hanumanwebapp.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hanuman Digital Studio">
+<meta property="og:title" content="Hanuman Digital Studio — Premium Web Apps & 3D Experiences">
+<meta property="og:description" content="Hand-coded, premium websites, admin panels and AI tools for local businesses — cinematic digital experiences, not templates.">
+<meta property="og:url" content="https://hanumanwebapp.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hanuman Digital Studio — Premium Web Apps & 3D Experiences">
+<meta name="twitter:description" content="Hand-coded, premium websites, admin panels and AI tools for local businesses — cinematic digital experiences, not templates.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23c4491a'/%3E%3Ctext x='50' y='68' font-family='Arial' font-weight='800' font-size='58' fill='%23fbeae0' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23c4491a'/%3E%3Ctext x='50' y='68' font-family='Arial' font-weight='800' font-size='58' fill='%23fbeae0' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
 <style>
 /* ========================================================================
    HANUMAN DIGITAL STUDIO — "FORGE" DESIGN SYSTEM
@@ -144,7 +158,7 @@ html[data-celebration="newyear"]{
 }
 
 *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
-html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; overflow-x:hidden; overflow-x:clip; }
 html{ scroll-behavior:smooth; }
 @media (prefers-reduced-motion: reduce){
   html{ scroll-behavior:auto; }
@@ -158,6 +172,8 @@ body{
   font-size:16px;
   line-height:1.6;
   overflow-x:hidden;
+  overflow-x:clip;
+  overflow-wrap:break-word;
   transition:background var(--dur-med) var(--ease-out), color var(--dur-med) var(--ease-out);
   -webkit-font-smoothing:antialiased;
 }
@@ -311,12 +327,14 @@ html.dark .grain{ opacity:.035; }
   background:var(--obsidian);
   display:flex; flex-direction:column; align-items:center; justify-content:center;
   gap:22px;
+  overflow:hidden;
   transition:opacity .8s var(--ease-out), visibility .8s;
 }
 #preloader.done{ opacity:0; visibility:hidden; pointer-events:none; }
 .preloader-mark{
   font-family:var(--font-display); font-weight:800; font-size:15px;
   letter-spacing:.3em; text-transform:uppercase; color:var(--ink);
+  max-width:100%; padding:0 24px; text-align:center;
 }
 .preloader-mark span{ color:var(--ember); }
 .preloader-bar{ width:220px; height:2px; background:rgba(255,255,255,0.08); border-radius:2px; overflow:hidden; }
@@ -424,26 +442,22 @@ html.dark .theme-toggle .moon{ display:block; }
 }
 @media (prefers-reduced-motion: reduce){ .btn-primary{ animation:none; } }
 
-/* ---- Independence Day: tricolor fill on every primary button + the
-   chat launcher, matching the flag's saffron/white/green. The bands
-   are dark-scrimmed (not shown at full brightness) specifically so
-   white text/icons stay clearly legible everywhere, including over
-   what would otherwise be a bright white middle band. ---- */
-html[data-celebration="independence"] .btn-primary,
-html[data-celebration="independence"] #chat-toggle{
+/* ---- Independence Day: tricolor fill on every primary button, and a
+   tricolor ring around the chat launcher (kept as a border, not a
+   background fill, so the IRA logo inside stays fully visible). ---- */
+html[data-celebration="independence"] .btn-primary{
   background:
     linear-gradient(rgba(15,10,6,.52), rgba(15,10,6,.52)),
     linear-gradient(135deg, #ff9933 0%, #ff9933 33%, #ffffff 33%, #ffffff 67%, #128807 67%, #128807 100%);
+}
+html[data-celebration="independence"] #chat-toggle{
+  box-shadow:0 0 0 3px #ff9933, 0 0 0 6px #ffffff, 0 0 0 9px #128807, 0 12px 34px -8px rgba(196,73,26,.7);
 }
 html[data-celebration="independence"] .btn-primary{
   color:#ffffff;
   text-shadow:0 1px 3px rgba(0,0,0,.85);
 }
 html[data-celebration="independence"] .btn-primary svg{
-  stroke:#ffffff;
-  filter:drop-shadow(0 1px 2px rgba(0,0,0,.85));
-}
-html[data-celebration="independence"] #chat-toggle svg{
   stroke:#ffffff;
   filter:drop-shadow(0 1px 2px rgba(0,0,0,.85));
 }
@@ -467,9 +481,11 @@ html[data-celebration="independence"] #chat-toggle .ping{
   position:fixed; inset:0; z-index:850; background:var(--bg);
   display:flex; flex-direction:column; align-items:center; justify-content:center; gap:28px;
   transform:translateY(-100%); transition:transform .5s var(--ease-in-out);
+  overflow:hidden;
 }
 .mobile-menu.open{ transform:translateY(0); }
-.mobile-menu a{ font-family:var(--font-display); font-size:30px; font-weight:700; }
+.mobile-menu a{ font-family:var(--font-display); font-size:30px; font-weight:700; max-width:100%; }
+.mobile-menu-cta{ font-family:var(--font-body) !important; font-size:15px !important; font-weight:600 !important; margin-top:10px; }
 
 /* ========================================================================
    INTRO FRAME STORY — frame-by-frame scroll-scrub, plays before the hero.
@@ -701,145 +717,25 @@ html[data-celebration="independence"] #hero-bg{
 @media (max-width:900px){ .theme-hero-video{ max-width:480px; margin-top:10px; } }
 @media (max-width:600px){ .theme-hero-video{ max-width:340px; } }
 
-.hs-glow{
-  inset:-10%; border-radius:50%;
-  background:radial-gradient(ellipse 62% 58% at 55% 42%, rgba(255,140,60,.3) 0%, rgba(196,73,26,0) 70%);
-  filter:blur(6px); z-index:0;
-  transform:translate(var(--hp-x,0px), var(--hp-y,0px));
+.hero-visual{
+  inset:0; border-radius:28px; overflow:hidden; z-index:1;
+  background:linear-gradient(155deg, var(--amber-soft) 0%, var(--ember) 46%, var(--sindoor) 100%);
+  box-shadow:0 30px 80px -20px rgba(0,0,0,.4);
 }
-.hs-dots{
-  top:2%; right:4%; width:78px; height:64px; z-index:1; opacity:.5;
-  background-image:radial-gradient(var(--accent) 1.2px, transparent 1.6px);
-  background-size:12px 12px;
-  transform:translate(var(--hp-x,0px), var(--hp-y,0px));
+.hero-visual-media{
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; object-position:center;
+  opacity:0; transition:opacity .5s var(--ease-out);
 }
-.hs-ring{ border-radius:50%; border:1px solid var(--border-strong); opacity:.4; z-index:1; }
-.hs-ring-a{ width:30%; height:30%; top:8%; left:2%; transform:translate(var(--hp-x,0px), var(--hp-y,0px)); }
-.hs-ring-b{ width:14%; height:14%; top:46%; left:-4%; opacity:.3; transform:translate(var(--hp-x,0px), var(--hp-y,0px)); }
-
-.hs-slab{
-  border-radius:36px 36px 60px 60px;
-  background:color-mix(in srgb, var(--bg-card) 55%, transparent);
-  border:1px solid var(--border);
-  backdrop-filter:blur(2px);
-  z-index:1;
+.hero-visual-media.show{ opacity:1; }
+/* ---- Brand placeholder shown until the admin sets a real photo/video —
+   never a blank or broken box. ---- */
+.hero-visual::before{
+  content:'H';
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-display); font-weight:800; font-size:min(30vw,220px);
+  color:rgba(255,255,255,.16);
 }
-.hs-slab-a{ width:22%; height:70%; top:6%; left:0%; transform:rotate(-3deg); opacity:.7; }
-.hs-slab-b{ width:20%; height:52%; bottom:4%; right:0%; transform:rotate(4deg); opacity:.65; }
-.hs-slab-c{ width:34%; height:44%; bottom:0; left:32%; border-radius:30px 30px 0 0; opacity:.7;
-  background:linear-gradient(200deg, color-mix(in srgb, var(--bg-card) 70%, transparent) 0%, rgba(255,150,70,.22) 100%);
-}
-
-.hs-arch{
-  left:18%; width:56%; z-index:2;
-  border-radius:50% 50% 0 0/34% 34% 0 0;
-  box-shadow:0 30px 60px -20px rgba(60,32,14,.35), inset 0 -18px 30px rgba(255,255,255,.15);
-}
-.hs-arch-back{
-  left:13%; width:64%; top:0%; height:94%;
-  border-radius:50% 50% 0 0/32% 32% 0 0;
-  background:linear-gradient(148deg, #f3d3a3 0%, var(--amber) 34%, var(--sindoor) 72%, #3a1808 100%);
-  opacity:.96; transform:translate(var(--hp-x,0px), var(--hp-y,0px));
-  box-shadow:0 34px 64px -22px rgba(50,26,10,.45), inset 10px 14px 26px rgba(255,235,205,.35), inset -14px -20px 34px rgba(40,18,8,.4);
-}
-.hs-arch-front{
-  top:14%; height:80%; left:21%; width:48%;
-  border-radius:50% 50% 0 0/34% 34% 0 0;
-  background:linear-gradient(158deg, #eec49a 0%, var(--amber) 40%, var(--sindoor) 82%, #2c1206 100%);
-  transform:translate(var(--hp-x,0px), var(--hp-y,0px));
-  box-shadow:inset 6px 10px 18px rgba(255,238,215,.4), inset -10px -16px 26px rgba(35,16,6,.45);
-}
-.hs-arch-front::before{
-  content:''; position:absolute; inset:0;
-  border-radius:inherit;
-  padding:2px;
-  background:linear-gradient(155deg, rgba(255,240,215,.85) 0%, rgba(255,200,140,.15) 30%, rgba(0,0,0,0) 55%);
-  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor; mask-composite:exclude;
-  pointer-events:none;
-}
-.hs-arch-glow{
-  position:absolute; inset:15% 15% 0 15%;
-  border-radius:50% 50% 0 0/48% 48% 0 0;
-  background:linear-gradient(180deg, var(--obsidian-2) 0%, var(--obsidian) 55%, #2a1206 100%);
-  box-shadow:0 0 0 2px rgba(255,160,80,.7), 0 0 46px 10px rgba(255,130,50,.8), 0 0 90px 24px rgba(255,110,40,.35), inset 0 0 46px 6px rgba(255,150,70,.6);
-  animation:archPulse 5.5s ease-in-out infinite;
-}
-@keyframes archPulse{
-  0%,100%{ box-shadow:0 0 0 2px rgba(255,160,80,.7), 0 0 46px 10px rgba(255,130,50,.8), 0 0 90px 24px rgba(255,110,40,.35), inset 0 0 46px 6px rgba(255,150,70,.6); }
-  50%{ box-shadow:0 0 0 2px rgba(255,180,100,.85), 0 0 58px 14px rgba(255,140,55,.95), 0 0 110px 30px rgba(255,120,45,.45), inset 0 0 56px 8px rgba(255,165,80,.7); }
-}
-@media (prefers-reduced-motion: reduce){ .hs-arch-glow{ animation:none; } }
-
-.hs-ground{
-  left:24%; width:52%; bottom:-2%; height:16%; z-index:2;
-  border-radius:50%;
-  background:radial-gradient(ellipse 60% 100% at 50% 100%, rgba(255,150,70,.4) 0%, rgba(255,150,70,0) 72%);
-  filter:blur(10px);
-  transform:translate(var(--hp-x,0px), var(--hp-y,0px));
-}
-.hs-flare{
-  left:56%; top:38%; width:34%; height:2px; z-index:5;
-  background:linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,230,200,.9) 50%, rgba(255,255,255,0) 100%);
-  transform:rotate(-32deg); transform-origin:left center;
-  opacity:.7; filter:blur(.4px);
-  animation:flareShift 6s ease-in-out infinite;
-}
-@keyframes flareShift{ 0%,100%{ opacity:.45; transform:rotate(-32deg) scaleX(.9); } 50%{ opacity:.85; transform:rotate(-32deg) scaleX(1.08); } }
-@media (prefers-reduced-motion: reduce){ .hs-flare{ animation:none; } }
-
-.hs-sphere{
-  border-radius:50%; z-index:3;
-  background:radial-gradient(circle at 32% 26%, #f2c99a 0%, var(--amber) 46%, var(--sindoor) 100%);
-  box-shadow:0 14px 26px -8px rgba(60,32,14,.5), inset -6px -8px 14px rgba(80,30,10,.4), inset 4px 6px 10px rgba(255,235,210,.55);
-  animation:hsFloat 11s ease-in-out infinite;
-}
-.hs-sphere{ overflow:visible; }
-.hs-sphere::before{
-  content:''; position:absolute; top:14%; left:20%; width:34%; height:24%;
-  border-radius:50%;
-  background:radial-gradient(circle, rgba(255,255,255,.85) 0%, rgba(255,255,255,0) 72%);
-  filter:blur(.5px);
-}
-.hs-sphere::after{
-  content:''; position:absolute; left:50%; bottom:-14%; width:70%; height:22%;
-  background:radial-gradient(ellipse, rgba(50,26,12,.32) 0%, rgba(50,26,12,0) 72%);
-  transform:translateX(-50%); z-index:-1;
-}
-.hs-sphere-lg{ width:11%; aspect-ratio:1/1; left:6%; top:44%; animation-duration:13s; }
-.hs-sphere-sm1{ width:6%; aspect-ratio:1/1; right:12%; top:28%; animation-duration:9.5s; animation-delay:-3s; }
-.hs-sphere-sm2{ width:5%; aspect-ratio:1/1; left:36%; bottom:20%; animation-duration:12s; animation-delay:-6s; }
-@keyframes hsFloat{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-16px); } }
-
-.hs-crystal{
-  width:9%; aspect-ratio:1/1; z-index:3; left:40%; bottom:8%;
-  background:linear-gradient(135deg, #eab27e, var(--sindoor));
-  clip-path:polygon(50% 0%, 100% 38%, 78% 100%, 22% 100%, 0% 38%);
-  box-shadow:0 12px 22px -8px rgba(60,32,14,.45);
-  animation:hsFloat 10s ease-in-out infinite; animation-delay:-1.5s;
-}
-
-.hs-card{
-  z-index:4; left:-4%; bottom:26%; width:44%; min-width:180px;
-  background:color-mix(in srgb, var(--bg-card) 92%, transparent);
-  border:1px solid var(--border-strong);
-  backdrop-filter:blur(14px) saturate(150%); -webkit-backdrop-filter:blur(14px) saturate(150%);
-  border-radius:20px; padding:18px 20px 20px;
-  box-shadow:0 24px 50px -20px rgba(40,24,10,.4), 0 4px 14px -6px rgba(40,24,10,.25);
-  animation:hsCard 7s ease-in-out infinite;
-  transition:box-shadow var(--dur-fast) var(--ease-out);
-}
-.hs-card:hover{ box-shadow:0 30px 60px -18px rgba(40,24,10,.5), 0 6px 18px -6px rgba(40,24,10,.3); }
-.hs-card-icon{
-  width:32px; height:32px; border-radius:9px; display:flex; align-items:center; justify-content:center;
-  background:var(--grad-ember); margin-bottom:12px;
-  box-shadow:0 8px 16px -6px rgba(196,73,26,.55);
-}
-.hs-card-icon svg{ width:16px; height:16px; stroke:var(--on-accent); }
-.hs-card p{ font-size:12.5px; line-height:1.55; color:var(--text-dim); }
-.hs-card-line{ display:block; width:26px; height:2px; margin-top:12px; background:var(--accent); border-radius:2px; }
-@keyframes hsCard{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-9px); } }
-
 .hs-scroll{
   z-index:4; right:max(2%, 92px); bottom:4%; display:inline-flex; align-items:center; gap:8px;
   width:max-content; max-width:none; flex-wrap:nowrap; white-space:nowrap;
@@ -855,7 +751,7 @@ html[data-celebration="independence"] #hero-bg{
 @keyframes hsArrow{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(4px); } }
 
 @media (prefers-reduced-motion: reduce){
-  .hs-sphere, .hs-crystal, .hs-card, .hs-scroll-arr{ animation:none; }
+  .hs-scroll-arr{ animation:none; }
 }
 
 .hero-stats{
@@ -1193,6 +1089,96 @@ html.dark .bg-orb.o2{ background:radial-gradient(circle, rgba(255,150,50,.24) 0%
 }
 .pmodal .pactions{ margin-top:30px; display:flex; gap:12px; flex-wrap:wrap; }
 
+.legal-modal{ width:min(100%, 720px); max-height:82vh; overflow-y:auto; }
+.legal-modal-body h2{ font-size:1.7rem; margin-bottom:6px; }
+.legal-modal-body .legal-updated{ font-family:var(--font-mono); font-size:11.5px; color:var(--text-dimmer); text-transform:uppercase; letter-spacing:.06em; }
+.legal-modal-body .legal-disclaimer{
+  margin-top:18px; padding:14px 16px; border-radius:12px;
+  background:color-mix(in srgb, var(--accent) 10%, transparent);
+  border:1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  font-size:.85rem; line-height:1.6; color:var(--text-dim);
+}
+.legal-modal-body h3{ font-size:1.05rem; margin-top:26px; margin-bottom:8px; }
+.legal-modal-body p{ font-size:.92rem; line-height:1.75; color:var(--text-dim); margin-bottom:10px; }
+.legal-modal-body ul{ margin:10px 0 14px 20px; }
+.legal-modal-body li{ font-size:.92rem; line-height:1.75; color:var(--text-dim); margin-bottom:6px; }
+.legal-modal-body a{ color:var(--accent); text-decoration:underline; }
+@media (max-width:600px){ .legal-modal{ width:94vw; max-height:88vh; padding:22px; } }
+
+/* ---- Confirmation modal: cinematic thank-you popup shown after a
+   contact-form submission. Reuses .pmodal-backdrop/.pmodal for the
+   overlay + card entrance, then layers its own staggered reveal on top:
+   the checkmark pops with a pulsing ring, followed by the title, subtext,
+   info card, detail boxes, and buttons fading/sliding in one after
+   another so it reads as a small sequence rather than one flat pop. ---- */
+.confirm-modal{ width:min(100%, 460px); text-align:center; padding:44px 36px 36px; }
+@media (max-width:600px){ .confirm-modal{ width:94vw; padding:36px 24px 28px; } }
+
+.confirm-check{
+  position:relative; width:84px; height:84px; margin:0 auto 22px; border-radius:50%;
+  background:color-mix(in srgb, var(--accent) 14%, transparent);
+  display:flex; align-items:center; justify-content:center; color:var(--accent);
+  opacity:0; transform:scale(.4);
+}
+.confirm-check svg{ width:34px; height:34px; opacity:0; transform:scale(.5); }
+.confirm-check-ring{
+  position:absolute; inset:-8px; border-radius:50%; border:2px solid var(--accent);
+  opacity:0;
+}
+.pmodal-backdrop.open .confirm-check{ animation:confirmCheckPop .6s cubic-bezier(.17,.89,.32,1.28) .15s forwards; }
+.pmodal-backdrop.open .confirm-check svg{ animation:confirmTickDraw .45s ease-out .48s forwards; }
+.pmodal-backdrop.open .confirm-check-ring{ animation:confirmRingPulse 1.1s ease-out .35s; }
+@keyframes confirmCheckPop{ 0%{ opacity:0; transform:scale(.4); } 100%{ opacity:1; transform:scale(1); } }
+@keyframes confirmTickDraw{ 0%{ opacity:0; transform:scale(.5); } 100%{ opacity:1; transform:scale(1); } }
+@keyframes confirmRingPulse{ 0%{ opacity:.9; transform:scale(.85); } 100%{ opacity:0; transform:scale(1.5); } }
+
+.confirm-title, .confirm-sub, .confirm-info-card, .confirm-detail-grid, .confirm-query-bar, .confirm-actions{
+  opacity:0; transform:translateY(14px);
+}
+.pmodal-backdrop.open .confirm-title{ animation:confirmRise .5s var(--ease-out) .32s forwards; }
+.pmodal-backdrop.open .confirm-sub{ animation:confirmRise .5s var(--ease-out) .4s forwards; }
+.pmodal-backdrop.open .confirm-info-card{ animation:confirmRise .5s var(--ease-out) .5s forwards; }
+.pmodal-backdrop.open .confirm-detail-grid{ animation:confirmRise .5s var(--ease-out) .58s forwards; }
+.pmodal-backdrop.open .confirm-query-bar{ animation:confirmRise .5s var(--ease-out) .66s forwards; }
+.pmodal-backdrop.open .confirm-actions{ animation:confirmRise .5s var(--ease-out) .74s forwards; }
+@keyframes confirmRise{ 0%{ opacity:0; transform:translateY(14px); } 100%{ opacity:1; transform:translateY(0); } }
+@media (prefers-reduced-motion: reduce){
+  .confirm-check, .confirm-check svg, .confirm-check-ring,
+  .confirm-title, .confirm-sub, .confirm-info-card, .confirm-detail-grid, .confirm-query-bar, .confirm-actions{
+    animation:none !important; opacity:1 !important; transform:none !important;
+  }
+}
+
+.confirm-title{ font-size:1.7rem; margin-top:0; }
+.confirm-sub{ margin-top:10px; color:var(--text-dim); line-height:1.6; font-size:.94rem; }
+.confirm-info-card{
+  margin-top:24px; padding:18px 20px; border-radius:14px;
+  background:color-mix(in srgb, var(--accent) 9%, transparent);
+  border:1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.confirm-info-icon{ display:inline-flex; margin-bottom:6px; color:var(--accent); }
+.confirm-info-icon svg{ width:16px; height:16px; }
+.confirm-info-label{ display:block; font-family:var(--font-mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-dimmer); }
+.confirm-info-value{ display:block; font-family:var(--font-display); font-size:1.25rem; margin-top:4px; }
+.confirm-info-sub{ display:block; margin-top:4px; font-size:.86rem; color:var(--text-dim); }
+.confirm-detail-grid{ margin-top:14px; display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.confirm-detail-box{
+  padding:16px 12px; border-radius:12px;
+  background:color-mix(in srgb, var(--accent) 6%, transparent);
+  border:1px solid var(--border);
+}
+.confirm-detail-icon{ display:inline-flex; margin-bottom:6px; color:var(--accent); }
+.confirm-detail-icon svg{ width:16px; height:16px; }
+.confirm-detail-label{ display:block; font-family:var(--font-mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-dimmer); }
+.confirm-detail-value{ display:block; margin-top:3px; font-size:.92rem; font-weight:600; word-break:break-word; }
+.confirm-query-bar{
+  margin-top:18px; padding:12px 16px; border-radius:10px; font-size:.86rem; color:var(--text-dim);
+  background:color-mix(in srgb, var(--accent) 6%, transparent);
+}
+.confirm-query-bar a{ color:var(--accent); font-weight:700; text-decoration:underline; }
+.confirm-actions{ margin-top:22px; display:flex; gap:12px; }
+.confirm-actions .btn{ flex:1; }
+
 .thumb-1{ background:linear-gradient(150deg,#3a0f0a,#7a2a12 55%,#c96a1f); }
 .thumb-1 .wt-word{ color:#ffe3b0; }
 .thumb-2{ background:linear-gradient(150deg,#050a14,#0f1f33 55%,#1a3a5c); }
@@ -1250,6 +1236,7 @@ html.dark .bg-orb.o2{ background:radial-gradient(circle, rgba(255,150,50,.24) 0%
   display:flex; align-items:center; gap:18px; padding:20px 22px;
   border:1px solid var(--border); border-radius:var(--radius-md);
   transition:border-color var(--dur-fast), transform var(--dur-fast);
+  max-width:100%;
 }
 .contact-method:hover{ border-color:var(--border-strong); transform:translateX(4px); }
 .contact-method .cm-icon{
@@ -1257,8 +1244,9 @@ html.dark .bg-orb.o2{ background:radial-gradient(circle, rgba(255,150,50,.24) 0%
   display:flex; align-items:center; justify-content:center; flex:none;
 }
 .contact-method .cm-icon svg{ width:20px; height:20px; stroke:var(--accent); }
+.contact-method > span:last-child{ min-width:0; flex:1 1 auto; }
 .contact-method b{ display:block; font-size:.98rem; }
-.contact-method span{ display:block; font-size:.85rem; color:var(--text-dim); margin-top:2px; }
+.contact-method span{ display:block; font-size:.85rem; color:var(--text-dim); margin-top:2px; overflow-wrap:anywhere; word-break:break-word; }
 
 .form-field{ margin-bottom:18px; }
 .form-field label{ display:block; font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-dimmer); margin-bottom:9px; }
@@ -1269,6 +1257,19 @@ html.dark .bg-orb.o2{ background:radial-gradient(circle, rgba(255,150,50,.24) 0%
 .form-field input:focus, .form-field textarea:focus, .form-field select:focus{ border-color:var(--accent); box-shadow:0 0 0 3px rgba(196,73,26,.15); outline:none; }
 .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
 .form-note{ margin-top:14px; font-size:.82rem; color:var(--text-dimmer); }
+.form-btn-row{ display:flex; gap:12px; }
+.form-btn-row .btn{ flex:1; }
+.btn-whatsapp{
+  background:#25D366; color:#fff;
+  box-shadow:0 8px 30px -8px rgba(37,211,102,.55);
+  transition:transform .25s var(--ease-out), box-shadow .25s var(--ease-out);
+}
+.btn-whatsapp:hover{ transform:translateY(-2px); box-shadow:0 14px 34px -8px rgba(37,211,102,.75); }
+@media (max-width:520px){ .form-btn-row{ flex-direction:column; } }
+.form-consent{ display:flex; align-items:flex-start; gap:10px; margin:4px 0 16px; }
+.form-consent input[type="checkbox"]{ width:17px; height:17px; margin-top:2px; flex-shrink:0; accent-color:var(--accent); cursor:pointer; }
+.form-consent label{ font-size:.86rem; line-height:1.6; color:var(--text-dim); cursor:pointer; }
+.form-consent label a{ color:var(--accent); text-decoration:underline; }
 
 /* ========================================================================
    FOOTER
@@ -1282,23 +1283,6 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
 .footer-col a:hover{ color:var(--accent); }
 .footer-bottom{ display:flex; justify-content:space-between; align-items:center; padding-top:28px; border-top:1px solid var(--border); flex-wrap:wrap; gap:14px; }
 .footer-bottom span{ font-family:var(--font-mono); font-size:11.5px; color:var(--text-dimmer); }
-.admin-entry{
-  display:inline-flex; align-items:center; gap:8px;
-  font-family:var(--font-mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; font-weight:700;
-  color:var(--text-dim);
-  background:var(--surface-2);
-  border:1px solid var(--border-strong);
-  padding:9px 18px 9px 13px;
-  border-radius:var(--radius-full);
-  box-shadow:0 8px 20px -10px rgba(0,0,0,.6);
-  transition:background var(--dur-fast) var(--ease-out), border-color var(--dur-fast), color var(--dur-fast), transform var(--dur-fast), box-shadow var(--dur-fast);
-}
-.admin-entry svg{ width:14px; height:14px; stroke:currentColor; flex:none; }
-.admin-entry:hover{
-  background:var(--grad-ember); border-color:transparent; color:var(--on-accent);
-  transform:translateY(-2px); box-shadow:0 10px 26px -8px rgba(196,73,26,.55);
-}
-
 /* ========================================================================
    CHAT WIDGET (ESTIMATOR BUBBLE)
    ======================================================================== */
@@ -1307,13 +1291,14 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
   bottom:calc(28px + env(safe-area-inset-bottom, 0px));
   right:calc(28px + env(safe-area-inset-right, 0px));
   z-index:1200;
-  width:64px; height:64px; border-radius:50%; background:var(--grad-ember);
+  width:64px; height:64px; border-radius:50%; background:#fff;
   display:flex; align-items:center; justify-content:center;
   box-shadow:0 12px 34px -8px rgba(196,73,26,.7);
   transition:transform var(--dur-fast) var(--ease-out);
+  padding:6px;
 }
 #chat-toggle:hover{ transform:scale(1.07); }
-#chat-toggle svg{ width:26px; height:26px; stroke:var(--on-accent); }
+#chat-toggle img{ width:100%; height:100%; object-fit:cover; border-radius:50%; display:block; }
 #chat-toggle .ping{
   position:absolute; top:-4px; right:-4px; width:16px; height:16px; border-radius:50%;
   background:var(--sindoor); border:2px solid var(--bg); font-family:var(--font-mono); font-size:9px;
@@ -1334,7 +1319,8 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
 }
 #chat-panel.open{ transform:translateY(0) scale(1); opacity:1; pointer-events:auto; }
 .chat-head{ padding:18px 20px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:12px; background:var(--bg-alt); }
-.chat-head .ch-avatar{ width:38px; height:38px; border-radius:50%; background:var(--grad-ember); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-weight:700; color:var(--on-accent); font-size:13px; flex:none; }
+.chat-head .ch-avatar{ width:38px; height:38px; border-radius:50%; background:#fff; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; flex:none; overflow:hidden; padding:3px; }
+.chat-head .ch-avatar img{ width:100%; height:100%; object-fit:cover; border-radius:50%; display:block; }
 .chat-head b{ font-size:.94rem; display:block; }
 .chat-head span{ font-size:.76rem; color:var(--text-dim); display:flex; align-items:center; gap:6px; }
 .chat-head span i{ width:6px; height:6px; border-radius:50%; background:#3fd66a; }
@@ -1386,96 +1372,6 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
 .chat-ask-send svg{ width:16px; height:16px; stroke:var(--on-accent); }
 .chat-ask-send:disabled{ opacity:.5; pointer-events:none; }
 
-/* ========================================================================
-   ADMIN PANEL
-   ======================================================================== */
-#admin-gate, #admin-panel{
-  position:fixed; inset:0; z-index:2000; background:var(--bg);
-  display:none; overflow-y:auto;
-}
-#admin-gate.open, #admin-panel.open{ display:block; }
-.admin-gate-wrap{ min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; }
-.admin-gate-card{ width:min(100%,380px); text-align:center; }
-.admin-gate-card h2{ font-size:1.5rem; margin:18px 0 8px; }
-.admin-gate-card p{ color:var(--text-dim); font-size:.88rem; margin-bottom:26px; }
-.admin-gate-card input{ width:100%; text-align:center; padding:16px; border:1px solid var(--border-strong); border-radius:var(--radius-sm); background:var(--bg-card); font-size:1rem; letter-spacing:.2em; margin-bottom:14px; }
-.admin-err{ color:var(--sindoor); font-size:.8rem; margin-bottom:14px; min-height:16px; }
-
-.admin-top{ position:sticky; top:0; z-index:5; background:var(--bg-alt); border-bottom:1px solid var(--border); padding:18px 0; }
-.admin-top .container{ display:flex; align-items:center; justify-content:space-between; }
-.admin-body{ padding:44px 0 90px; }
-.admin-body .container{ display:grid; grid-template-columns:220px 1fr; gap:44px; align-items:start; }
-.admin-nav{ position:sticky; top:96px; display:flex; flex-direction:column; gap:4px; }
-.admin-nav button{ text-align:left; padding:11px 14px; border-radius:10px; font-size:.9rem; color:var(--text-dim); }
-.admin-nav button.active{ background:var(--surface-2); color:var(--ink); }
-.admin-nav button:hover{ color:var(--text); }
-
-.admin-panel-view{ display:none; }
-.admin-panel-view.active{ display:block; }
-.admin-card{ background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-md); padding:30px; margin-bottom:22px; }
-.admin-card h3{ font-size:1.1rem; margin-bottom:20px; }
-.admin-grid2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-.admin-field{ margin-bottom:16px; }
-.admin-field label{ display:block; font-family:var(--font-mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--text-dimmer); margin-bottom:8px; }
-.admin-field input, .admin-field textarea, .admin-field select{
-  width:100%; padding:12px 14px; border:1px solid var(--border-strong); border-radius:8px; background:var(--bg); font-size:16px; color:var(--text);
-}
-.admin-field select{ cursor:pointer; }
-.admin-field textarea{ min-height:80px; resize:vertical; }
-
-/* Chromium respects background/color set directly on <option> — without
-   this the open dropdown list falls back to a white browser default,
-   which made light theme text nearly unreadable against it */
-.admin-field select option, .form-field select option{
-  background:var(--bg-card); color:var(--text);
-}
-.admin-proj-item{ display:grid; grid-template-columns:56px 1fr auto; gap:16px; align-items:center; padding:16px; border:1px solid var(--border); border-radius:12px; margin-bottom:12px; }
-
-/* ---- Celebration theme picker cards, admin panel ---- */
-.theme-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:14px; }
-.theme-card{
-  position:relative; text-align:left; padding:18px 16px; border:1.5px solid var(--border); border-radius:14px;
-  background:var(--bg-card); cursor:pointer; transition:border-color var(--dur-fast), transform var(--dur-fast);
-}
-.theme-card:hover{ transform:translateY(-2px); border-color:var(--border-strong); }
-.theme-card.active{ border-color:var(--ember); }
-.theme-card .tc-swatch{ width:100%; height:36px; border-radius:8px; margin-bottom:12px; }
-.theme-card .tc-icon{ font-size:1.3rem; }
-.theme-card .tc-label{ font-weight:700; margin-top:8px; font-size:.95rem; }
-.theme-card .tc-check{
-  position:absolute; top:12px; right:12px; width:20px; height:20px; border-radius:50%;
-  background:var(--grad-ember); display:none; align-items:center; justify-content:center;
-}
-.theme-card.active .tc-check{ display:flex; }
-.theme-card .tc-check svg{ width:12px; height:12px; stroke:var(--on-accent); }
-.admin-proj-item .ap-thumb{ width:56px; height:56px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:800; font-size:1.1rem; }
-.admin-proj-item .ap-info b{ display:block; font-size:.92rem; }
-.admin-proj-item .ap-info span{ font-size:.78rem; color:var(--text-dimmer); }
-.admin-proj-actions{ display:flex; gap:8px; }
-.admin-proj-actions button{ width:34px; height:34px; border-radius:8px; border:1px solid var(--border-strong); display:flex; align-items:center; justify-content:center; }
-.admin-proj-actions button svg{ width:14px; height:14px; }
-
-.admin-editform{ display:none; }
-.admin-editform.open{ display:block; }
-.sb-status{ display:inline-flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:12px; padding:8px 14px; border-radius:var(--radius-full); border:1px solid var(--border-strong); }
-.sb-status i{ width:7px; height:7px; border-radius:50%; flex:none; }
-.sb-status.on i{ background:#3fd66a; box-shadow:0 0 8px 1px #3fd66a; }
-.sb-status.off i{ background:var(--sindoor); }
-.sb-steps{ margin-top:18px; display:flex; flex-direction:column; gap:14px; counter-reset:sbstep; }
-.sb-steps li{ display:flex; gap:14px; font-size:.86rem; color:var(--text-dim); line-height:1.65; }
-.sb-steps b{ font-family:var(--font-mono); color:var(--accent); flex:none; }
-.sb-code{ background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:14px 16px; font-family:var(--font-mono); font-size:.76rem; color:var(--text-dim); overflow-x:auto; white-space:pre; margin-top:10px; line-height:1.6; }
-.hv-preview{ width:100%; border-radius:12px; overflow:hidden; border:1px solid var(--border); margin-top:18px; background:#000; }
-.hv-preview video{ width:100%; display:block; max-height:280px; }
-.hv-empty{ padding:36px 20px; text-align:center; color:var(--text-dimmer); font-size:.85rem; border:1px dashed var(--border-strong); border-radius:12px; margin-top:18px; }
-.hv-upload-row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:18px; }
-.hv-upload-row input[type="file"]{ font-size:.82rem; color:var(--text-dim); }
-.hv-status-line{ font-size:.82rem; color:var(--accent); margin-top:10px; font-family:var(--font-mono); min-height:16px; }
-.admin-img-preview{ margin-top:12px; width:100%; max-width:200px; border-radius:10px; overflow:hidden; border:1px solid var(--border); aspect-ratio:16/10; background:var(--bg); }
-.admin-img-preview img{ width:100%; height:100%; object-fit:cover; display:block; }
-.admin-img-preview.empty{ display:flex; align-items:center; justify-content:center; }
-.admin-img-preview.empty::before{ content:'No image yet'; font-size:.72rem; color:var(--text-dimmer); font-family:var(--font-mono); }
-
 .toast{
   position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px); z-index:3000;
   background:var(--grad-ember); color:var(--on-accent); padding:13px 22px; border-radius:var(--radius-full);
@@ -1502,8 +1398,6 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
   .estimator-visual{ border-left:none; border-top:1px solid var(--border); padding:50px; }
   .contact-grid{ grid-template-columns:1fr; gap:44px; }
   .two-col{ grid-template-columns:1fr; }
-  .admin-body .container{ grid-template-columns:1fr; }
-  .admin-nav{ position:static; flex-direction:row; flex-wrap:wrap; }
 }
 
 /* Tablets in portrait & small laptops — the full nav row gets cramped
@@ -1519,8 +1413,6 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
   .services-grid{ grid-template-columns:1fr; }
   .hero-stats{ gap:26px; margin-top:52px; flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; padding-bottom:6px; }
   .hero-scene{ max-width:340px; aspect-ratio:1/1.15; }
-  .hs-card{ width:56%; padding:14px 16px 16px; }
-  .hs-card p{ font-size:11.5px; }
   .hs-scroll{ font-size:10px; padding:9px 14px; }
   .process-item{ grid-template-columns:1fr; gap:10px; }
   .footer-top{ flex-direction:column; }
@@ -1528,15 +1420,13 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
   #chat-panel{ right:16px; left:16px; width:auto; bottom:calc(96px + env(safe-area-inset-bottom, 0px)); }
   #chat-toggle{ right:calc(18px + env(safe-area-inset-right, 0px)); bottom:calc(18px + env(safe-area-inset-bottom, 0px)); }
   .form-row{ grid-template-columns:1fr; }
-  .admin-grid2{ grid-template-columns:1fr; }
   .footer-col a, .footer-col span{ padding:9px 0; }
-  .admin-nav button{ padding:12px 16px; font-size:.88rem; }
-  .admin-proj-actions button{ width:38px; height:38px; }
 }
 
 /* Small phones */
 @media (max-width:480px){
   .container{ width:min(100% - 32px, var(--container)); }
+  .preloader-mark{ font-size:12.5px; letter-spacing:.16em; }
   .hero-kicker{ font-size:10.5px; padding:7px 12px; white-space:normal; text-align:center; line-height:1.5; }
   .hero-title{ font-size:clamp(1.7rem, 8.6vw, 2.6rem); font-size:clamp(1.7rem, 13cqi, 2.6rem); }
   .hero-actions{ flex-direction:column; align-items:stretch; gap:12px; }
@@ -1547,13 +1437,28 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
   .value-card{ padding:32px 26px; }
   .service-card{ padding:28px 24px; }
   .estimator-copy{ padding:40px 26px; }
-  .admin-card{ padding:24px 20px; }
+  .estimator-visual{ padding:36px 26px; }
+  .estimator-visual .price-preview .amt{ font-size:2.5rem; }
   .pmodal{ padding:28px; }
   .contact-method{ padding:16px 18px; }
   .section-head{ gap:20px; }
   .work-body{ padding:22px 22px 26px; }
   .footer-links{ gap:30px; }
+  .confirm-actions{ flex-direction:column; }
+  .confirm-actions .btn{ white-space:normal; }
 }
+
+/* Very small phones (iPhone SE / older Android, ~320-375px) — the nav
+   row is the tightest fit on the whole site since it holds a wordmark,
+   theme toggle, and burger all in one line */
+@media (max-width:380px){
+  .logo small{ display:none; }
+  .logo{ font-size:15px; gap:8px; }
+  .logo .mark{ width:26px; height:26px; }
+  .nav-right{ gap:8px; }
+  #nav .container{ width:min(100% - 32px, 1320px); }
+}
+
 
 /* Short-height / landscape phones — the hero has much less room to work
    with, so it trims its own vertical rhythm instead of forcing a scroll
@@ -1618,6 +1523,7 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
   <a href="#about">About</a>
   <a href="#process">Process</a>
   <a href="#contact">Contact</a>
+  <a href="#contact" class="btn btn-primary mobile-menu-cta">Let's build together<span class="arr">↗</span></a>
 </div>
 
 <!-- INTRO FRAME STORY -->
@@ -1679,31 +1585,9 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
       </div>
 
       <div class="hero-scene" aria-hidden="true">
-        <div class="hs-glow"></div>
-        <div class="hs-dots"></div>
-        <div class="hs-ring hs-ring-a"></div>
-        <div class="hs-ring hs-ring-b"></div>
-        <div class="hs-slab hs-slab-a"></div>
-        <div class="hs-slab hs-slab-b"></div>
-        <div class="hs-slab hs-slab-c"></div>
-
-        <div class="hs-arch hs-arch-back"></div>
-        <div class="hs-arch hs-arch-front">
-          <div class="hs-arch-glow"></div>
-        </div>
-
-        <div class="hs-ground"></div>
-
-        <span class="hs-sphere hs-sphere-lg"></span>
-        <span class="hs-sphere hs-sphere-sm1"></span>
-        <span class="hs-sphere hs-sphere-sm2"></span>
-        <span class="hs-crystal"></span>
-        <div class="hs-flare"></div>
-
-        <div class="hs-card">
-          <span class="hs-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg></span>
-          <p>Pixel-perfect.<br>Performance obsessed.<br>Purpose driven.</p>
-          <i class="hs-card-line"></i>
+        <div class="hero-visual" id="heroVisual">
+          <img id="heroVisualImg" class="hero-visual-media" alt="">
+          <video id="heroVisualVideo" class="hero-visual-media" muted playsinline loop preload="auto"></video>
         </div>
 
         <a href="#work" class="hs-scroll">Scroll to explore <span class="hs-scroll-arr">↓</span></a>
@@ -1883,19 +1767,19 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
     </div>
     <div class="estimator-shell reveal">
       <div class="estimator-copy">
-        <p class="section-sub" style="margin-top:0;max-width:none;">Answer four quick questions in the chat estimator — no email, no waiting for a callback. You'll get an instant price range based on real project scope.</p>
+        <p class="section-sub" style="margin-top:0;max-width:none;">Answer four quick questions in a chat with IRA, our AI assistant — no email, no waiting for a callback. You'll get an instant price range based on real project scope.</p>
         <ul>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Instant range, not a "we'll get back to you" form</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Based on real feature complexity, not guesswork</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Take your range straight into a WhatsApp chat</li>
         </ul>
-        <button class="btn btn-primary" style="margin-top:32px;" id="estimatorOpenBtn">Open cost estimator<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></button>
+        <button class="btn btn-primary" style="margin-top:32px;" id="estimatorOpenBtn">Chat with IRA<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></button>
       </div>
       <div class="estimator-visual">
         <div class="price-preview">
           <span class="lbl mono">Typical project range</span>
-          <div class="amt">₹15K – ₹90K</div>
-          <span class="sub">Final number depends on your four answers</span>
+          <div class="amt">From ₹7K</div>
+          <span class="sub">+ domain, hosting &amp; other charges — final number depends on your requirements</span>
         </div>
       </div>
     </div>
@@ -1917,15 +1801,15 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
       <div class="contact-methods">
         <a class="contact-method" id="cmWhatsapp" href="#" target="_blank" rel="noopener">
           <span class="cm-icon"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M17.6 6.32A8.86 8.86 0 0 0 12.05 4a8.94 8.94 0 0 0-8.94 8.94c0 1.58.41 3.11 1.19 4.47L3 21l3.7-1.28a8.9 8.9 0 0 0 4.27 1.09h.01a8.94 8.94 0 0 0 8.94-8.94 8.86 8.86 0 0 0-2.32-5.55zM12 19.6a7.3 7.3 0 0 1-3.72-1.02l-.27-.16-2.77.96.93-2.7-.18-.28a7.34 7.34 0 1 1 6.01 3.2zm4-5.48c-.22-.11-1.29-.64-1.49-.71-.2-.07-.34-.11-.49.11-.15.22-.56.71-.69.85-.13.15-.25.16-.47.05-.22-.11-.93-.34-1.77-1.09-.65-.58-1.09-1.3-1.22-1.52-.13-.22-.01-.34.1-.45.1-.1.22-.25.33-.38.11-.13.15-.22.22-.36.07-.15.04-.28-.02-.39-.07-.11-.49-1.18-.67-1.61-.18-.43-.36-.37-.49-.38-.13-.01-.28-.01-.43-.01a.83.83 0 0 0-.6.28c-.2.22-.79.77-.79 1.87s.81 2.17.92 2.32c.11.15 1.6 2.44 3.87 3.42.54.23.96.37 1.29.48.54.17 1.03.15 1.42.09.43-.06 1.29-.53 1.48-1.04.18-.51.18-.94.13-1.04-.05-.09-.2-.15-.42-.26z"/></svg></span>
-          <span><b>WhatsApp</b><span class="mono" id="cmWhatsappText">+91 00000 00000</span></span>
+          <span><b>WhatsApp</b><span class="mono" id="cmWhatsappText">+91 99128 88172</span></span>
         </a>
         <a class="contact-method" id="cmEmail" href="#">
           <span class="cm-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
-          <span><b>Email</b><span class="mono" id="cmEmailText">hello@hanumandigitalstudio.com</span></span>
+          <span><b>Email</b><span class="mono" id="cmEmailText">hanumandigitalstudio.software@gmail.com</span></span>
         </a>
         <a class="contact-method" id="cmPhone" href="#">
           <span class="cm-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-          <span><b>Phone</b><span class="mono" id="cmPhoneText">+91 00000 00000</span></span>
+          <span><b>Phone</b><span class="mono" id="cmPhoneText">+91 99128 88172</span></span>
         </a>
         <div class="contact-method" style="cursor:default;">
           <span class="cm-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
@@ -1949,8 +1833,15 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
           </select>
         </div>
         <div class="form-field"><label>Tell me about your project</label><textarea name="message" required placeholder="What are you looking to build?"></textarea></div>
-        <button type="submit" class="btn btn-primary" style="width:100%;">Send via WhatsApp<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
-        <p class="form-note">This opens WhatsApp with your details pre-filled — nothing is sent until you hit send there. Prefer email? <a href="#" id="mailtoFallback" style="color:var(--accent);">Use email instead</a>.</p>
+        <div class="form-consent">
+          <input type="checkbox" id="consentCheckbox" name="consent" required>
+          <label for="consentCheckbox">I agree to the <a href="#" id="openTermsOfServiceConsent">Terms of Service</a> and <a href="#" id="openPrivacyPolicyConsent">Privacy Policy</a>, and consent to Hanuman Digital Studio storing my details to process this inquiry.</label>
+        </div>
+        <div class="form-btn-row">
+          <button type="submit" class="btn btn-primary">Send<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></button>
+          <button type="button" class="btn btn-whatsapp" id="waSubmitBtn">Send via WhatsApp<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M17.6 6.32A8.86 8.86 0 0 0 12.05 4a8.94 8.94 0 0 0-8.94 8.94c0 1.58.41 3.11 1.19 4.47L3 21l3.7-1.28a8.9 8.9 0 0 0 4.27 1.09h.01a8.94 8.94 0 0 0 8.94-8.94 8.86 8.86 0 0 0-2.32-5.55zM12 19.6a7.3 7.3 0 0 1-3.72-1.02l-.27-.16-2.77.96.93-2.7-.18-.28a7.34 7.34 0 1 1 6.01 3.2zm4-5.48c-.22-.11-1.29-.64-1.49-.71-.2-.07-.34-.11-.49.11-.15.22-.56.71-.69.85-.13.15-.25.16-.47.05-.22-.11-.93-.34-1.77-1.09-.65-.58-1.09-1.3-1.22-1.52-.13-.22-.01-.34.1-.45.1-.1.22-.25.33-.38.11-.13.15-.22.22-.36.07-.15.04-.28-.02-.39-.07-.11-.49-1.18-.67-1.61-.18-.43-.36-.37-.49-.38-.13-.01-.28-.01-.43-.01a.83.83 0 0 0-.6.28c-.2.22-.79.77-.79 1.87s.81 2.17.92 2.32c.11.15 1.6 2.44 3.87 3.42.54.23.96.37 1.29.48.54.17 1.03.15 1.42.09.43-.06 1.29-.53 1.48-1.04.18-.51.18-.94.13-1.04-.05-.09-.2-.15-.42-.26z"/></svg></button>
+        </div>
+        <p class="form-note">"Send" opens an email draft on your device. "Send via WhatsApp" opens a pre-filled WhatsApp chat — nothing is sent until you hit send there.</p>
       </form>
     </div>
   </div>
@@ -1972,24 +1863,76 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
         </div>
         <div class="footer-col">
           <h4>Contact</h4>
-          <span id="footWhatsapp" class="mono">+91 00000 00000</span>
-          <span id="footEmail" class="mono">hello@hanumandigitalstudio.com</span>
+          <span id="footWhatsapp" class="mono">+91 99128 88172</span>
+          <span id="footEmail" class="mono">hanumandigitalstudio.software@gmail.com</span>
           <span id="footLocation">Kamareddy, Telangana, India</span>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="#" id="openPrivacyPolicy">Privacy Policy</a><a href="#" id="openTermsOfService">Terms of Service</a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
       <span>© <span id="yearNow"></span> Hanuman Digital Studio. All rights reserved.</span>
+      <span style="display:flex;gap:18px;">
+        <a href="#" id="openPrivacyPolicyBottom" style="font-family:var(--font-mono);font-size:11.5px;color:var(--text-dimmer);">Privacy Policy</a>
+        <a href="#" id="openTermsOfServiceBottom" style="font-family:var(--font-mono);font-size:11.5px;color:var(--text-dimmer);">Terms of Service</a>
+      </span>
     </div>
   </div>
 </footer>
+
+<!-- LEGAL MODALS -->
+<div class="pmodal-backdrop" id="legalModalBackdrop">
+  <div class="pmodal legal-modal" style="position:relative;">
+    <button class="pmodal-close" id="legalModalClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <div class="legal-modal-body" id="legalModalBody"></div>
+  </div>
+</div>
+
+<!-- CONFIRMATION MODAL -->
+<div class="pmodal-backdrop" id="confirmModalBackdrop">
+  <div class="pmodal confirm-modal" style="position:relative;">
+    <button class="pmodal-close" id="confirmModalClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <div class="confirm-check" id="confirmCheckIcon">
+      <span class="confirm-check-ring"></span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h3 class="confirm-title">Thank You!</h3>
+    <p class="confirm-sub" id="confirmSub">Your project inquiry has been sent 🎉<br>We'll get back to you shortly.</p>
+    <div class="confirm-info-card">
+      <span class="confirm-info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+      <span class="confirm-info-label">Submitted</span>
+      <span class="confirm-info-value" id="confirmSubmittedAt"></span>
+      <span class="confirm-info-sub" id="confirmProjectType"></span>
+    </div>
+    <div class="confirm-detail-grid">
+      <div class="confirm-detail-box">
+        <span class="confirm-detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+        <span class="confirm-detail-label">Name</span>
+        <span class="confirm-detail-value" id="confirmName"></span>
+      </div>
+      <div class="confirm-detail-box">
+        <span class="confirm-detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+        <span class="confirm-detail-label">Sent via</span>
+        <span class="confirm-detail-value" id="confirmChannel"></span>
+      </div>
+    </div>
+    <div class="confirm-query-bar">For queries call <a href="#" id="confirmPhoneLink"></a></div>
+    <div class="confirm-actions">
+      <button class="btn btn-whatsapp" id="confirmWaBtn" type="button">WhatsApp us<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M17.6 6.32A8.86 8.86 0 0 0 12.05 4a8.94 8.94 0 0 0-8.94 8.94c0 1.58.41 3.11 1.19 4.47L3 21l3.7-1.28a8.9 8.9 0 0 0 4.27 1.09h.01a8.94 8.94 0 0 0 8.94-8.94 8.86 8.86 0 0 0-2.32-5.55zM12 19.6a7.3 7.3 0 0 1-3.72-1.02l-.27-.16-2.77.96.93-2.7-.18-.28a7.34 7.34 0 1 1 6.01 3.2zm4-5.48c-.22-.11-1.29-.64-1.49-.71-.2-.07-.34-.11-.49.11-.15.22-.56.71-.69.85-.13.15-.25.16-.47.05-.22-.11-.93-.34-1.77-1.09-.65-.58-1.09-1.3-1.22-1.52-.13-.22-.01-.34.1-.45.1-.1.22-.25.33-.38.11-.13.15-.22.22-.36.07-.15.04-.28-.02-.39-.07-.11-.49-1.18-.67-1.61-.18-.43-.36-.37-.49-.38-.13-.01-.28-.01-.43-.01a.83.83 0 0 0-.6.28c-.2.22-.79.77-.79 1.87s.81 2.17.92 2.32c.11.15 1.6 2.44 3.87 3.42.54.23.96.37 1.29.48.54.17 1.03.15 1.42.09.43-.06 1.29-.53 1.48-1.04.18-.51.18-.94.13-1.04-.05-.09-.2-.15-.42-.26z"/></svg></button>
+      <button class="btn btn-primary" id="confirmDoneBtn" type="button">Done<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></button>
+    </div>
+  </div>
+</div>
 
 <!-- PROJECT MODAL -->
 <div class="pmodal-backdrop" id="pmodalBackdrop">
   <div class="pmodal" style="position:relative;">
     <button class="pmodal-close" id="pmodalClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-    <div class="pmodal-cover" id="pmodalCoverWrap"><img id="pmodalCoverImg" alt=""></div>
-    <div class="pmodal-logo-row" id="pmodalLogoRow"><img id="pmodalLogoImg" alt=""></div>
+    <div class="pmodal-cover" id="pmodalCoverWrap"><img id="pmodalCoverImg" alt="" loading="lazy" decoding="async"></div>
+    <div class="pmodal-logo-row" id="pmodalLogoRow"><img id="pmodalLogoImg" alt="" loading="lazy" decoding="async"></div>
     <span class="pcat mono" id="pmodalCat"></span>
     <h3 id="pmodalTitle"></h3>
     <p id="pmodalDesc"></p>
@@ -2015,12 +1958,12 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
 </div>
 
 <!-- CHAT WIDGET -->
-<button id="chat-toggle" aria-label="Open cost estimator" data-cursor-text="Estimate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><span class="ping">₹</span></button>
+<button id="chat-toggle" aria-label="Chat with IRA — cost estimator & AI assistant" data-cursor-text="Chat"><img id="chatToggleLogo" alt="IRA"><span class="ping">₹</span></button>
 
 <div id="chat-panel">
   <div class="chat-head">
-    <div class="ch-avatar mono">H</div>
-    <div><b>Cost Estimator</b><span><i></i>Online now</span></div>
+    <div class="ch-avatar mono"><img id="chatHeadLogo" alt="IRA"></div>
+    <div><b>IRA</b><span><i></i>Online now</span></div>
     <button class="ch-restart" id="chatRestartBtn" aria-label="Start a new conversation"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></button>
     <button class="ch-close" id="chatCloseBtn"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
@@ -2050,6 +1993,10 @@ var SUPABASE_BUCKET = "hero-media";
 
 var AI_FUNCTION_NAME = "ai-proxy"; // must match the Edge Function name in your Supabase project
 
+/* ---- IRA (the AI chat widget) logo, embedded as a data URI so the
+   whole site stays a single portable file with no extra image hosting. ---- */
+var IRA_LOGO_DATA_URI = "data:image/webp;base64,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";
+
 /* ---- Celebration themes — admin-selectable seasonal palette swaps.
    Each key matches a `html[data-celebration="key"]` CSS block above,
    which re-themes the accent colors sitewide. swatch is just for the
@@ -2076,20 +2023,29 @@ var DEFAULT_DATA = {
     desc: "Hanuman Digital Studio designs and hand-codes premium websites, admin panels and AI tools for local businesses — clinics, restaurants, studios, professionals. No templates. No page builders. Just engineered, cinematic software with your name on it.",
     stat1v: "06", stat1l: "Projects delivered",
     stat2v: "01", stat2l: "Founder — no outsourcing",
-    stat3v: "3D", stat3l: "Immersive, not templated"
+    stat3v: "3D", stat3l: "Immersive, not templated",
+    trustText: "Trusted by founders & businesses worldwide",
+    trustBadge: "50+"
   },
   contact: {
-    whatsapp: "910000000000",
-    phone: "+91 00000 00000",
-    email: "hello@hanumandigitalstudio.com",
+    whatsapp: "919912888172",
+    phone: "+91 99128 88172",
+    email: "hanumandigitalstudio.software@gmail.com",
     location: "Kamareddy, Telangana, India"
   },
   introFrames: [],
+  introFramesMobile: [],
   storyVideo: {
-    videoUrl: ""
+    videoUrl: "",
+    videoUrlMobile: ""
   },
   heroBg: {
     mode: "core",
+    videoUrl: ""
+  },
+  heroVisual: {
+    mode: "photo",
+    photoUrl: "",
     videoUrl: ""
   },
   site: {
@@ -2185,8 +2141,10 @@ function loadData(){
     merged.hero = Object.assign({}, merged.hero, parsed.hero || {});
     merged.contact = Object.assign({}, merged.contact, parsed.contact || {});
     merged.introFrames = (parsed.introFrames && parsed.introFrames.length) ? parsed.introFrames : merged.introFrames;
+    merged.introFramesMobile = (parsed.introFramesMobile && parsed.introFramesMobile.length) ? parsed.introFramesMobile : merged.introFramesMobile;
     merged.storyVideo = Object.assign({}, merged.storyVideo, parsed.storyVideo || {});
     merged.heroBg = Object.assign({}, merged.heroBg, parsed.heroBg || {});
+    merged.heroVisual = Object.assign({}, merged.heroVisual, parsed.heroVisual || {});
     merged.site = Object.assign({}, merged.site, parsed.site || {});
     merged.siteTheme = Object.assign({}, merged.siteTheme, parsed.siteTheme || {});
     merged.mediaVideos = parsed.mediaVideos || merged.mediaVideos;
@@ -2220,7 +2178,7 @@ function syncSiteDataFromCloud(){
     .then(function(res){ return res.ok ? res.json() : null; })
     .then(function(cloud){
       if(!cloud || !cloud.projects || !cloud.hero || !cloud.contact) return;
-      DATA.hero = cloud.hero;
+      DATA.hero = Object.assign({}, DEFAULT_DATA.hero, cloud.hero);
       DATA.contact = cloud.contact;
       DATA.site = cloud.site || DATA.site;
       DATA.siteTheme = cloud.siteTheme || DATA.siteTheme;
@@ -2265,6 +2223,8 @@ function renderHero(){
   if(s1v) s1v.textContent=h.stat1v; if(s1l) s1l.textContent=h.stat1l;
   if(s2v) s2v.textContent=h.stat2v; if(s2l) s2l.textContent=h.stat2l;
   if(s3v) s3v.textContent=h.stat3v; if(s3l) s3l.textContent=h.stat3l;
+  setText('.hero-trust p', h.trustText);
+  setText('.hero-trust-badge', h.trustBadge);
 }
 
 
@@ -2308,7 +2268,7 @@ function renderProjects(){
     return '' +
     '<div class="work-card" data-id="'+p.id+'" data-cursor-text="View">' +
       '<div class="work-thumb '+(hasCover?'':p.thumb)+(hasCover?' has-cover':'')+'">' +
-        (hasLogo ? '<div class="wt-logo"><img src="'+escapeHtml(p.logoUrl)+'" alt=""></div>' : '') +
+        (hasLogo ? '<div class="wt-logo"><img src="'+escapeHtml(p.logoUrl)+'" alt="" loading="lazy" decoding="async"></div>' : '') +
         '<span class="wt-word">'+escapeHtml(p.thumbWord||p.title)+'</span>' +
         '<div class="noise"></div>' +
       '</div>' +
@@ -2502,8 +2462,10 @@ function applyThemeHeroVideo(key){
     if(video.getAttribute('src') !== url){ video.src = url; video.load(); }
     video.classList.add('show');
     scene.style.display = 'none';
-    var p = video.play();
-    if(p && p.catch) p.catch(function(){});
+    if(heroInViewport){
+      var p = video.play();
+      if(p && p.catch) p.catch(function(){});
+    }
   } else {
     video.classList.remove('show');
     video.pause();
@@ -2613,6 +2575,8 @@ function closeProjectModal(){
 
 document.addEventListener('DOMContentLoaded', function(){
   document.getElementById('yearNow').textContent = new Date().getFullYear();
+  document.getElementById('chatToggleLogo').src = IRA_LOGO_DATA_URI;
+  document.getElementById('chatHeadLogo').src = IRA_LOGO_DATA_URI;
   renderAll();
   initTheme();
   splitTitleWords();
@@ -2622,6 +2586,7 @@ document.addEventListener('DOMContentLoaded', function(){
   initCursor();
   initRevealObserver();
   initWorkModal();
+  initLegalModals();
   initEstimatorChat();
   initContactForm();
   initHeroKickerPulseFix();
@@ -2630,11 +2595,13 @@ document.addEventListener('DOMContentLoaded', function(){
   initHeroSoundToggle();
   initSpotlightCards();
   initMagneticButtons();
-  initHeroSceneParallax();
   applyHeroBgMode();
+  applyHeroVisual();
+  observeHeroVideos();
   initIntroFrameStory();
   renderStoryVideoSection();
   syncHeroVideoFromCloud();
+  syncHeroVisualFromCloud();
   syncIntroFramesFromCloud();
   syncStoryVideoFromCloud();
   syncSiteDataFromCloud();
@@ -2815,8 +2782,139 @@ function initWorkModal(){
     if(e.target === this) closeVideoModal();
   });
   document.addEventListener('keydown', function(e){
-    if(e.key==='Escape'){ closeProjectModal(); closeVideoModal(); }
+    if(e.key==='Escape'){ closeProjectModal(); closeVideoModal(); closeLegalModal(); }
   });
+}
+
+/* ---- Legal modals (Privacy Policy / Terms of Service) ----
+   Content below reflects what this specific site actually does — no
+   fabricated certifications or data practices. It's a solid baseline,
+   not a substitute for a lawyer's review before launch. */
+
+var LEGAL_UPDATED = "13 August 2026";
+
+var PRIVACY_POLICY_HTML =
+  '<h2>Privacy Policy</h2>' +
+  '<span class="legal-updated">Last updated: ' + LEGAL_UPDATED + ' — Version 2.2, Statutory Revised</span>' +
+  '<div class="legal-disclaimer">This policy explains what actually happens on this site in plain terms, aligned with India’s Digital Personal Data Protection Act, 2023 (DPDP Act) and, where applicable, the EU GDPR. It is not a substitute for legal advice for your specific situation.</div>' +
+
+  '<h3>Who this is</h3>' +
+  '<p>This website is operated by Hanuman Digital Studio ("Studio", "we", "us"), a solo web development studio based in Kamareddy, Telangana, India, acting as the Data Fiduciary for personal data collected through this site. For any privacy question, reach out at <a href="mailto:hanumandigitalstudio.software@gmail.com">hanumandigitalstudio.software@gmail.com</a>.</p>' +
+
+  '<h3>Legal basis for processing</h3>' +
+  '<p>We only process your personal data where you’ve given clear, informed, affirmative consent — such as ticking the consent box before submitting the contact form — or where it’s necessary to take steps you’ve requested ahead of a service contract with us. You can withdraw consent at any time; see "Your rights" below.</p>' +
+
+  '<h3>What we collect, and why</h3>' +
+  '<ul>' +
+    '<li><b>Contact form / project inquiry:</b> the name, phone, email, project type, and project details you enter are used only to open a pre-filled WhatsApp message or email draft on your own device. This website does not save that submission to any server or database.</li>' +
+    '<li><b>AI chat &amp; estimator:</b> if you use the on-site AI assistant, whatever you type is sent to our backend, which forwards it to a third-party AI model provider to generate a reply. We don’t attach your name or contact details to that conversation unless you type them into the chat yourself, and we don’t build a permanent, identity-linked record of individual chats.</li>' +
+    '<li><b>Local storage:</b> your browser may cache site content and your light/dark theme preference locally, purely so the site loads faster on repeat visits. This stays on your device — it isn’t personal data and isn’t sent anywhere.</li>' +
+  '</ul>' +
+
+  '<h3>What we don’t do</h3>' +
+  '<ul>' +
+    '<li>No analytics or advertising trackers (no Google Analytics, Meta Pixel, or similar) are installed on this site.</li>' +
+    '<li>We never sell, rent, lease, or trade your personal information to third parties or marketing brokers under any circumstances.</li>' +
+    '<li>This site does not process payments — quotes and estimates here are informational only, not a binding offer.</li>' +
+  '</ul>' +
+
+  '<h3>How long we keep it</h3>' +
+  '<p>Since contact-form details aren’t stored on our servers, there’s generally nothing sitting in a database to retain — our part of the process ends once your device opens WhatsApp or your email client. If an inquiry turns into a signed, paid project, we retain the records needed for that contract, invoicing, and applicable Indian tax/audit rules for the contract term plus the legally required period, and we purge any temporary staging credentials or API keys shared with us within 30 days of project handover.</p>' +
+
+  '<h3>Cross-border transfers &amp; sub-processors</h3>' +
+  '<p>To run this site and its AI features, we rely on a small set of infrastructure providers, whose servers may be located outside India:</p>' +
+  '<ul>' +
+    '<li><b>Supabase:</b> hosts images/video from a public, read-only storage bucket and powers the AI chat backend.</li>' +
+    '<li><b>Groq:</b> the AI model provider used to generate AI assistant replies.</li>' +
+    '<li><b>Google Fonts:</b> loads typefaces from Google’s servers, which — like any web font CDN — receives your IP address as part of that request.</li>' +
+    '<li><b>WhatsApp / Meta:</b> once you send a message via the WhatsApp button or contact form, it’s handled under WhatsApp/Meta’s own privacy policy.</li>' +
+  '</ul>' +
+
+  '<h3>Your rights (DPDP Act 2023 &amp; GDPR)</h3>' +
+  '<ul>' +
+    '<li><b>Right to access:</b> ask for a summary of any personal data we hold about you and who processes it.</li>' +
+    '<li><b>Right to correction &amp; erasure:</b> ask us to correct inaccurate data or delete it, subject to any legal retention obligations that apply.</li>' +
+    '<li><b>Right to withdraw consent:</b> withdraw consent at any time via a simple message to us, without affecting anything already lawfully processed.</li>' +
+    '<li><b>Right to nominate (DPDP Act, Section 14):</b> nominate another person to exercise your data rights in the event of your death or incapacity.</li>' +
+    '<li><b>Right to grievance redressal:</b> raise a concern with us directly before escalating to a regulator (see below).</li>' +
+  '</ul>' +
+
+  '<h3>Security</h3>' +
+  '<p>Data in transit to and from this site is protected with standard SSL/TLS encryption, and access to backend systems is restricted. No method of transmission over the internet is 100% guaranteed against breach, but we take reasonable, industry-standard precautions.</p>' +
+
+  '<h3>Data protection &amp; grievance contact</h3>' +
+  '<p>For any privacy request, correction, deletion, or grievance under Section 13 of the DPDP Act, 2023, contact our Data Protection contact at <a href="mailto:hanumandigitalstudio.software@gmail.com">hanumandigitalstudio.software@gmail.com</a>. We aim to acknowledge requests within 72 hours and resolve them within 30 days. If unresolved, you may escalate to the Data Protection Board of India.</p>' +
+
+  '<h3>Changes to this policy</h3>' +
+  '<p>If how this site handles data changes, this page will be updated with a new "last updated" date above.</p>' +
+
+  '<h3>Governing law</h3>' +
+  '<p>This policy is governed by the laws of India, with disputes subject to the jurisdiction of the courts in Telangana, India.</p>';
+
+var TERMS_OF_SERVICE_HTML =
+  '<h2>Terms of Service</h2>' +
+  '<span class="legal-updated">Last updated: ' + LEGAL_UPDATED + '</span>' +
+  '<div class="legal-disclaimer">A general-purpose terms page for a services website — not a substitute for a lawyer’s review, especially before entering into any paid client contract.</div>' +
+
+  '<h3>Who this is</h3>' +
+  '<p>This website is operated by Hanuman Digital Studio, a solo web development studio based in Kamareddy, Telangana, India ("we", "us", "the studio"). By using this site, you agree to the terms below.</p>' +
+
+  '<h3>What’s on this site</h3>' +
+  '<p>This site showcases past work, describes services offered, and provides an informational cost estimator and AI assistant to help you scope a potential project. Nothing on this site — including anything the AI assistant or estimator says — is a binding quote, contract, or guarantee of price, timeline, or outcome. Actual project terms are agreed separately, in writing, once we’ve discussed your specific requirements.</p>' +
+
+  '<h3>Portfolio &amp; project references</h3>' +
+  '<p>Projects shown in the Work section reflect real work delivered by the studio. Descriptions are kept accurate to the best of our knowledge and updated as projects evolve.</p>' +
+
+  '<h3>Intellectual property</h3>' +
+  '<p>The design, code, and content of this website belong to Hanuman Digital Studio unless otherwise noted. Client logos, names, or project screenshots shown in the portfolio remain the property of their respective owners and are shown with permission as examples of work delivered.</p>' +
+
+  '<h3>No warranty</h3>' +
+  '<p>This site and its content are provided "as is." While we take reasonable care to keep it accurate and running smoothly, we don’t guarantee it will be uninterrupted, error-free, or fit for any particular purpose beyond general informational use.</p>' +
+
+  '<h3>Limitation of liability</h3>' +
+  '<p>To the extent permitted by law, Hanuman Digital Studio isn’t liable for any indirect, incidental, or consequential loss arising from your use of this website. This doesn’t affect any separate written agreement for actual project work, which is governed by its own terms.</p>' +
+
+  '<h3>Third-party links &amp; tools</h3>' +
+  '<p>This site links out to WhatsApp and uses Google Fonts and Supabase-hosted media. We’re not responsible for the content or practices of those third-party services once you leave this site or interact with them directly.</p>' +
+
+  '<h3>Changes to these terms</h3>' +
+  '<p>These terms may be updated from time to time; the "last updated" date above will reflect the latest revision.</p>' +
+
+  '<h3>Governing law</h3>' +
+  '<p>These terms are governed by the laws of India, and any disputes are subject to the jurisdiction of the courts in Telangana, India.</p>';
+
+function openLegalModal(html){
+  var body = document.getElementById('legalModalBody');
+  var backdrop = document.getElementById('legalModalBackdrop');
+  if(!body || !backdrop) return;
+  body.innerHTML = html;
+  backdrop.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  body.scrollTop = 0;
+}
+
+function closeLegalModal(){
+  var backdrop = document.getElementById('legalModalBackdrop');
+  if(!backdrop) return;
+  backdrop.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function initLegalModals(){
+  var privacyLinks = ['openPrivacyPolicy', 'openPrivacyPolicyBottom', 'openPrivacyPolicyConsent'];
+  var termsLinks = ['openTermsOfService', 'openTermsOfServiceBottom', 'openTermsOfServiceConsent'];
+  privacyLinks.forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.addEventListener('click', function(e){ e.preventDefault(); openLegalModal(PRIVACY_POLICY_HTML); });
+  });
+  termsLinks.forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.addEventListener('click', function(e){ e.preventDefault(); openLegalModal(TERMS_OF_SERVICE_HTML); });
+  });
+  var closeBtn = document.getElementById('legalModalClose');
+  if(closeBtn) closeBtn.addEventListener('click', closeLegalModal);
+  var backdrop = document.getElementById('legalModalBackdrop');
+  if(backdrop) backdrop.addEventListener('click', function(e){ if(e.target === this) closeLegalModal(); });
 }
 
 /* ========================================================================
@@ -2824,7 +2922,7 @@ function initWorkModal(){
    ======================================================================== */
 
 var STEPS = [
-  { key:'type', q:"Hey! 👋 I'm the Hanuman AI assistant. Tell me about your project anytime and I'll help figure out what fits — or let's knock out a quick estimate. What kind of project are you looking to build?",
+  { key:'type', q:"Hey! 👋 I'm IRA, Hanuman Digital Studio's AI assistant. Tell me about your project anytime and I'll help figure out what fits — or let's knock out a quick estimate. What kind of project are you looking to build?",
     options:[
       {label:'Business website', value:'business'},
       {label:'E-commerce store', value:'ecommerce'},
@@ -3094,7 +3192,7 @@ function projectsContextBlock(){
 
 
 function aiSystemPrompt(){
-  return "You are the AI consultant on Hanuman Digital Studio's website — a solo web development studio in India run by Rudra, building premium, hand-coded websites and web apps for local businesses. Your job is to actually help visitors figure out what they need, not just recite a service list.\n\n" +
+  return "You are IRA, the AI consultant on Hanuman Digital Studio's website — a solo web development studio in India run by Rudra, building premium, hand-coded websites and web apps for local businesses. Your job is to actually help visitors figure out what they need, not just recite a service list. Only mention your name (IRA) if someone asks who you are or what your name is — don't introduce yourself by name unprompted.\n\n" +
 
     "HOW TO TALK: Talk like a real person in a casual chat — the register of ChatGPT, Gemini, or Claude in a friendly conversation, not a customer-service script. Use contractions and short, natural sentences. Never use stiff phrases like \"What brings you here today\" or \"perhaps revamp an existing one\" — just talk the way you actually would to someone. If someone just says \"hi\" or greets you, greet them back warmly and casually and ask what they're working on — don't launch into a formal interrogation. If their need is vague, ask ONE short casual follow-up before recommending anything. If they've already given enough detail, skip straight to a recommendation — don't make people repeat themselves.\n\n" +
 
@@ -3169,10 +3267,54 @@ function sendChatAsk(){
    CONTACT FORM
    ======================================================================== */
 
+/* ---- Sends a copy of every contact-form submission to the admin panel's
+   "Requests" tab, via the same Supabase bucket/JSON pattern used for the
+   rest of this site's content. Read-modify-write against leads/leads.json:
+   fetch the current list, add this submission, upload it back. Fire-and-
+   forget — it never blocks or delays opening WhatsApp/email for the
+   visitor, and quietly no-ops if Supabase isn't connected. ---- */
+function pushLeadToCloud(fd, channel){
+  if(!sbClient) return;
+  var lead = {
+    id: 'ld_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
+    name: fd.get('name') || '',
+    phone: fd.get('phone') || '',
+    email: fd.get('email') || '',
+    projectType: fd.get('type') || '',
+    message: fd.get('message') || '',
+    channel: channel,
+    status: 'new',
+    createdAt: new Date().toISOString()
+  };
+  var r = sbClient.storage.from(SUPABASE_BUCKET).getPublicUrl('leads/leads.json');
+  var url = r && r.data ? r.data.publicUrl : null;
+  var fetchExisting = url
+    ? fetch(url + '?t=' + Date.now(), { cache:'no-store' }).then(function(res){ return res.ok ? res.json() : []; }).catch(function(){ return []; })
+    : Promise.resolve([]);
+  fetchExisting.then(function(list){
+    var leads = Array.isArray(list) ? list : [];
+    leads.unshift(lead);
+    if(leads.length > 500) leads = leads.slice(0, 500);
+    var blob = new Blob([JSON.stringify(leads)], { type:'application/json' });
+    return sbClient.storage.from(SUPABASE_BUCKET).upload('leads/leads.json', blob, { cacheControl:'0', upsert:true });
+  }).catch(function(err){ console.error('Lead sync failed', err); });
+}
+
 function initContactForm(){
   var form = document.getElementById('contactForm');
   form.addEventListener('submit', function(e){
     e.preventDefault();
+    var fd = new FormData(form);
+    var name = fd.get('name')||'', type = fd.get('type')||'', message = fd.get('message')||'';
+    var subject = encodeURIComponent('New project inquiry — ' + type);
+    var bodyText = encodeURIComponent("Name: "+name+"\n\n"+message);
+    pushLeadToCloud(fd, 'email');
+    window.location.href = 'mailto:' + DATA.contact.email + '?subject='+subject+'&body='+bodyText;
+    showConfirmModal(fd, 'email');
+    form.reset();
+  });
+  document.getElementById('waSubmitBtn').addEventListener('click', function(e){
+    if(!form.reportValidity()) return;
     var fd = new FormData(form);
     var name = fd.get('name')||'', phone = fd.get('phone')||'', email = fd.get('email')||'', type = fd.get('type')||'', message = fd.get('message')||'';
     var text = "Hi, I'm "+name+". I'm interested in a "+type+".\n" +
@@ -3180,16 +3322,77 @@ function initContactForm(){
       (phone ? "Phone: "+phone+"\n" : '') +
       "Details: " + message;
     var url = 'https://wa.me/' + DATA.contact.whatsapp.replace(/\D/g,'') + '?text=' + encodeURIComponent(text);
+    pushLeadToCloud(fd, 'whatsapp');
     window.open(url, '_blank');
+    showConfirmModal(fd, 'whatsapp');
+    form.reset();
   });
-  document.getElementById('mailtoFallback').addEventListener('click', function(e){
-    e.preventDefault();
-    var fd = new FormData(form);
-    var name = fd.get('name')||'', type = fd.get('type')||'', message = fd.get('message')||'';
-    var subject = encodeURIComponent('New project inquiry — ' + type);
-    var bodyText = encodeURIComponent("Name: "+name+"\n\n"+message);
-    window.location.href = 'mailto:' + DATA.contact.email + '?subject='+subject+'&body='+bodyText;
-  });
+  initConfirmModal();
+}
+
+/* ========================================================================
+   CONFIRMATION MODAL
+   Cinematic "thank you" popup shown right after a contact-form submission,
+   summarizing what was sent and offering a one-tap way to reach out on
+   the channel the visitor didn't already pick.
+   ======================================================================== */
+
+function buildWhatsappText(fd){
+  var name = fd.get('name')||'', email = fd.get('email')||'', phone = fd.get('phone')||'', type = fd.get('type')||'', message = fd.get('message')||'';
+  return "Hi, I'm "+name+". I'm interested in a "+type+".\n" +
+    (email ? "Email: "+email+"\n" : '') +
+    (phone ? "Phone: "+phone+"\n" : '') +
+    "Details: " + message;
+}
+
+function showConfirmModal(fd, channel){
+  var name = fd.get('name')||'', type = fd.get('type')||'';
+  document.getElementById('confirmName').textContent = name || 'Not given';
+  document.getElementById('confirmProjectType').textContent = type || '';
+  document.getElementById('confirmChannel').textContent = channel === 'whatsapp' ? 'WhatsApp' : 'Email';
+  document.getElementById('confirmSubmittedAt').textContent = new Date().toLocaleString(undefined, { weekday:'short', day:'numeric', month:'short', hour:'numeric', minute:'2-digit' });
+  document.getElementById('confirmSub').innerHTML = channel === 'whatsapp'
+    ? "We've opened WhatsApp with your message ready to go 🎉<br>Just hit send there and we'll reply fast."
+    : "Your project inquiry has been sent 🎉<br>We'll get back to you shortly.";
+
+  var phoneEl = document.getElementById('confirmPhoneLink');
+  phoneEl.textContent = DATA.contact.phone || DATA.contact.whatsapp || '';
+  phoneEl.href = 'tel:' + (DATA.contact.phone || DATA.contact.whatsapp || '').replace(/\s+/g,'');
+
+  var waBtn = document.getElementById('confirmWaBtn');
+  waBtn.innerHTML = (channel === 'whatsapp' ? 'Email us instead' : 'WhatsApp us') +
+    (channel === 'whatsapp'
+      ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>'
+      : '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M17.6 6.32A8.86 8.86 0 0 0 12.05 4a8.94 8.94 0 0 0-8.94 8.94c0 1.58.41 3.11 1.19 4.47L3 21l3.7-1.28a8.9 8.9 0 0 0 4.27 1.09h.01a8.94 8.94 0 0 0 8.94-8.94 8.86 8.86 0 0 0-2.32-5.55zM12 19.6a7.3 7.3 0 0 1-3.72-1.02l-.27-.16-2.77.96.93-2.7-.18-.28a7.34 7.34 0 1 1 6.01 3.2zm4-5.48c-.22-.11-1.29-.64-1.49-.71-.2-.07-.34-.11-.49.11-.15.22-.56.71-.69.85-.13.15-.25.16-.47.05-.22-.11-.93-.34-1.77-1.09-.65-.58-1.09-1.3-1.22-1.52-.13-.22-.01-.34.1-.45.1-.1.22-.25.33-.38.11-.13.15-.22.22-.36.07-.15.04-.28-.02-.39-.07-.11-.49-1.18-.67-1.61-.18-.43-.36-.37-.49-.38-.13-.01-.28-.01-.43-.01a.83.83 0 0 0-.6.28c-.2.22-.79.77-.79 1.87s.81 2.17.92 2.32c.11.15 1.6 2.44 3.87 3.42.54.23.96.37 1.29.48.54.17 1.03.15 1.42.09.43-.06 1.29-.53 1.48-1.04.18-.51.18-.94.13-1.04-.05-.09-.2-.15-.42-.26z"/></svg>');
+  waBtn.onclick = function(){
+    if(channel === 'whatsapp'){
+      var subject = encodeURIComponent('New project inquiry — ' + (fd.get('type')||''));
+      var bodyText = encodeURIComponent('Name: '+(fd.get('name')||'')+'\n\n'+(fd.get('message')||''));
+      window.location.href = 'mailto:' + DATA.contact.email + '?subject='+subject+'&body='+bodyText;
+    } else {
+      var url = 'https://wa.me/' + DATA.contact.whatsapp.replace(/\D/g,'') + '?text=' + encodeURIComponent(buildWhatsappText(fd));
+      window.open(url, '_blank');
+    }
+  };
+
+  var backdrop = document.getElementById('confirmModalBackdrop');
+  backdrop.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeConfirmModal(){
+  var backdrop = document.getElementById('confirmModalBackdrop');
+  if(!backdrop) return;
+  backdrop.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function initConfirmModal(){
+  var backdrop = document.getElementById('confirmModalBackdrop');
+  document.getElementById('confirmModalClose').addEventListener('click', closeConfirmModal);
+  document.getElementById('confirmDoneBtn').addEventListener('click', closeConfirmModal);
+  backdrop.addEventListener('click', function(e){ if(e.target === this) closeConfirmModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && backdrop.classList.contains('open')) closeConfirmModal(); });
 }
 
 /* ========================================================================
@@ -3219,6 +3422,42 @@ function applyHeroBgMode(){
   }
 }
 
+/* ---- Hero-scene visual card (right column) — shows whichever photo or
+   video the admin has uploaded. If nothing is set yet, both media
+   elements simply stay hidden and the branded "H" placeholder behind
+   them (see .hero-visual::before in CSS) shows instead, so it never
+   looks broken pre-launch. ---- */
+function applyHeroVisual(){
+  var img = document.getElementById('heroVisualImg');
+  var video = document.getElementById('heroVisualVideo');
+  if(!img || !video) return;
+  var hv = DATA.heroVisual || {};
+
+  if(hv.mode === 'video' && hv.videoUrl){
+    img.classList.remove('show');
+    img.removeAttribute('src');
+    if(video.getAttribute('src') !== hv.videoUrl){
+      video.src = hv.videoUrl;
+      video.load();
+    }
+    video.classList.add('show');
+    if(heroInViewport){
+      var p = video.play();
+      if(p && p.catch) p.catch(function(){});
+    }
+  } else if(hv.mode === 'photo' && hv.photoUrl){
+    video.classList.remove('show');
+    video.pause();
+    video.removeAttribute('src');
+    if(img.getAttribute('src') !== hv.photoUrl){ img.src = hv.photoUrl; }
+    img.classList.add('show');
+  } else {
+    img.classList.remove('show');
+    video.classList.remove('show');
+    video.pause();
+  }
+}
+
 /* ========================================================================
    STORY VIDEO — full-screen cinematic bridge section between the intro
    frame story and the Hero. Admin-uploaded; the section stays hidden
@@ -3226,15 +3465,28 @@ function applyHeroBgMode(){
    with its own Supabase pointer file (story-video/current.json).
    ======================================================================== */
 
+var _svIsMobileMode = null;
+
+function svPickVideoUrl(){
+  if(isMobileViewport() && DATA.storyVideo.videoUrlMobile) return DATA.storyVideo.videoUrlMobile;
+  return DATA.storyVideo.videoUrl;
+}
+
 function renderStoryVideoSection(){
   var sec = document.getElementById('story-video');
   var video = document.getElementById('story-video-el');
   var snd = document.getElementById('storyVideoSound');
   if(!sec || !video) return;
-  if(DATA.storyVideo.videoUrl){
+  _svIsMobileMode = isMobileViewport();
+  // Same explicit-pixel-height fix as the intro frame story's sticky
+  // canvas -- don't trust 100svh to resolve correctly in every mobile
+  // browser (see ssResizeCanvas for the full explanation).
+  sec.style.height = window.innerHeight + 'px';
+  var activeUrl = svPickVideoUrl();
+  if(activeUrl){
     sec.style.display = '';
-    if(video.getAttribute('src') !== DATA.storyVideo.videoUrl){
-      video.src = DATA.storyVideo.videoUrl;
+    if(video.getAttribute('src') !== activeUrl){
+      video.src = activeUrl;
       video.load();
       video.dataset.started = '0'; // new footage — allow a fresh sound-on attempt
       if(snd) snd.classList.remove('vis');
@@ -3312,35 +3564,67 @@ function unmuteStoryVideo(){
 
 /* ---- Intro frame story: admin-uploaded photo sequence that scrubs
    frame-by-frame as the visitor scrolls, drawn to a canvas. Independent
-   of the hero video, with its own Supabase pointer file. ----
-   NOTE: px-per-frame is deliberately generous (was 14, now 34, with a
-   higher floor/cap) so a normal wheel/trackpad tick only advances a
-   handful of frames instead of skipping dozens — otherwise the sequence
-   flips so fast it reads as a video instead of a scroll-scrub. This is
-   paired with ssDisplayIdx easing below so even a big scroll delta
-   (fast flick / trackpad fling) catches up smoothly over a few frames
-   rather than snapping instantly. ---- */
+   of the hero video, with its own Supabase pointer file. Matches the
+   reference (skin-clinic) scroll-story implementation: scroll position
+   maps directly to frame index every tick, no easing — so every frame in
+   the sequence, all the way up to the last one, is guaranteed to actually
+   get drawn as the visitor scrolls through it. ---- */
 
 var ssCanvas, ssCtx, ssImgs = [], ssLastGoodIdx = -1, ssInited = false, ssPreloadStarted = false;
 
-var ssTargetIdx = 0, ssDisplayIdx = 0, ssRafRunning = false;
+var ssCurrentIdx = 0; // frame currently drawn — scroll position maps straight to this, no easing/catch-up
+
+var ssFrames = []; // the frame set actually shown to this visitor (desktop or mobile — picked in renderIntroFrameStory)
+var ssIsMobileMode = null; // tracks which mode ssFrames was last picked for, so a breakpoint crossing (resize/rotate) can be detected
+
+function isMobileViewport(){ return window.matchMedia('(max-width:760px)').matches; }
+
+function ssPickFrames(){
+  if(isMobileViewport() && DATA.introFramesMobile.length) return DATA.introFramesMobile;
+  return DATA.introFrames;
+}
 
 
 function ssResizeCanvas(){
   if(!ssCanvas) return;
   var sticky = ssCanvas.parentElement;
+  // Force an explicit pixel height via JS rather than trusting the CSS
+  // 100vh/100svh on `.ss-sticky` to resolve correctly — some in-app/
+  // embedded mobile browsers (file-opener webviews, older OEM browsers)
+  // don't compute those units reliably, which was collapsing the pinned
+  // canvas down to a sliver and leaving the rest of the screen showing
+  // nothing but the section's plain background — the "black gap".
+  sticky.style.height = window.innerHeight + 'px';
   var dpr = Math.min(window.devicePixelRatio || 1, 2);
-  ssCanvas.width = sticky.clientWidth * dpr;
-  ssCanvas.height = sticky.clientHeight * dpr;
+  var newW = sticky.clientWidth * dpr, newH = sticky.clientHeight * dpr;
+  // Setting canvas.width/height ALWAYS wipes its bitmap, even when the
+  // value doesn't actually change. Mobile browsers fire `resize` on every
+  // address-bar show/hide *during* a scroll gesture (not just on an
+  // intentional window resize) — without this guard+redraw, that mid-
+  // scroll resize event blanks the canvas to nothing (the obsidian
+  // section background shows through as a black flash) until the next
+  // scroll tick happens to redraw it, which reads as a gap mid-scrub.
+  if(ssCanvas.width === newW && ssCanvas.height === newH) return;
+  ssCanvas.width = newW;
+  ssCanvas.height = newH;
+  if(ssFrames.length) ssDraw(ssCurrentIdx);
 }
 
 
 function ssComputeTrackHeight(){
   var track = document.getElementById('ssTrack');
   if(!track) return;
-  var n = DATA.introFrames.length;
+  var n = ssFrames.length;
   var vh = window.innerHeight;
-  var px = Math.min(Math.max(n * 34, vh * 3.5), vh * 16);
+  // Scroll distance needed to scrub through the frame sequence. px-per-
+  // frame controls playback speed — higher means the visitor has to
+  // scroll further to advance each frame, i.e. slower/more deliberate
+  // motion. Floor of 2 screens (so short frame sets still get a real
+  // pin), cap of 16 screens (so large sets — 300, even 1000 frames —
+  // actually get proportional room instead of being squeezed into a
+  // track too short to hold them all, which is what caused frames to
+  // visibly get skipped before).
+  var px = Math.min(Math.max(n * 26, vh * 2), vh * 16);
   track.style.height = px + 'px';
 }
 
@@ -3358,115 +3642,91 @@ function ssDrawImageCover(img){
 
 
 function ssGetImage(idx){
-  var frames = DATA.introFrames;
-  if(idx < 0 || idx >= frames.length) return null;
+  if(idx < 0 || idx >= ssFrames.length) return null;
   var img = ssImgs[idx];
   if(!img){
     img = new Image();
     img.decoding = 'async';
-    img.src = frames[idx];
+    img.src = ssFrames[idx];
     ssImgs[idx] = img;
   }
   return img;
 }
 
 
-function ssDraw(idx){
-  if(!ssCanvas || !DATA.introFrames.length) return;
+function ssImgReady(img){ return img && img.complete && img.naturalWidth; }
+
+
+/* Draws the frame closest to the current scroll position — a clean, hard
+   switch, no pixel-blending between frames. A crossfade between adjacent
+   frames was tried here to smooth the transition, but these are real
+   motion-video frames (moving car, moving neon reflections), not
+   independent stills — alpha-blending two motion frames double-exposes
+   any bright moving light between its two positions, which read as a
+   ghosted streak across the scene during every transition. At this frame
+   density (300 frames with generous scroll room per frame) a clean
+   frame-to-frame switch already reads as smooth motion on its own — the
+   blend wasn't actually needed and was the thing causing the artifact. */
+function ssDraw(idxFloat){
+  if(!ssCanvas || !ssFrames.length) return;
+  var idx = Math.max(0, Math.min(ssFrames.length - 1, Math.round(idxFloat)));
   var img = ssGetImage(idx);
-  if(img && img.complete && img.naturalWidth){
+  if(ssImgReady(img)){
     ssDrawImageCover(img);
     ssLastGoodIdx = idx;
     ssCanvas.classList.add('ready');
   } else {
     if(ssLastGoodIdx >= 0){
       var fb = ssGetImage(ssLastGoodIdx);
-      if(fb && fb.complete && fb.naturalWidth) ssDrawImageCover(fb);
+      if(ssImgReady(fb)) ssDrawImageCover(fb);
     }
-    if(img){ img.onload = function(){ ssDraw(idx); }; }
+    if(img){ img.onload = function(){ ssDraw(idxFloat); }; }
   }
 }
 
 
 function ssOnScroll(){
   var track = document.getElementById('ssTrack');
-  var frames = DATA.introFrames;
-  if(!track || !frames.length) return;
+  if(!track || !ssFrames.length) return;
   var rect = track.getBoundingClientRect();
   var vh = window.innerHeight;
   var total = rect.height - vh;
   if(total <= 0) return;
   var progress = Math.max(0, Math.min(1, -rect.top / total));
-  ssTargetIdx = progress * (frames.length - 1);
-  /* At the very start/end of the pinned track, snap instantly instead of
-     easing. Without this, a fast/flick scroll can reach the bottom of the
-     track (which unpins the section and lets Hero slide in underneath)
-     before the eased display has caught up to the final frame — so the
-     story visibly "cuts off" mid-sequence right as the next section
-     arrives. Snapping at the boundaries guarantees frame 0 and the last
-     frame are always exactly on-screen the instant the section pins/
-     unpins, no matter how fast the user scrolled to get there. */
-  if(progress <= 0 || progress >= 1){
-    ssDisplayIdx = ssTargetIdx;
-    ssDraw(Math.round(ssDisplayIdx));
-    return;
-  }
-  ssStartRaf();
-}
-
-/* Eases the on-screen frame toward ssTargetIdx instead of snapping to it.
-   A big/fast scroll still lands on the right frame, but it catches up
-   over a handful of animation frames rather than jumping instantly —
-   this is what keeps a fast scroll from reading as a video jump-cut.
-   (Boundary frames bypass this entirely — see ssOnScroll above.) */
-
-function ssStartRaf(){
-  if(ssRafRunning) return;
-  ssRafRunning = true;
-  requestAnimationFrame(ssTick);
-}
-
-
-function ssTick(){
-  var diff = ssTargetIdx - ssDisplayIdx;
-  if(Math.abs(diff) < 0.02){
-    ssDisplayIdx = ssTargetIdx;
-    ssDraw(Math.round(ssDisplayIdx));
-    ssRafRunning = false;
-    return;
-  }
-  /* Catch-up rate scales with how far behind we are, so a huge fast-scroll
-     jump converges in a couple of frames instead of dozens — cuts the
-     window in which the display can still be lagging when the track
-     boundary is reached. */
-  var rate = Math.min(0.45, 0.22 + Math.abs(diff) * 0.01);
-  ssDisplayIdx += diff * rate;
-  ssDraw(Math.round(ssDisplayIdx));
-  requestAnimationFrame(ssTick);
+  // Direct 1:1 mapping from scroll position to frame index — no lag/
+  // catch-up animation (that was the earlier "skipped frames" bug: on a
+  // fast scroll an eased display value chases the target but never
+  // actually catches up before the section unpins, so whole frames never
+  // get drawn). Every frame the visitor scrolls past is guaranteed to
+  // actually render, with a clean cut between frames (see ssDraw).
+  ssCurrentIdx = progress * (ssFrames.length - 1);
+  ssDraw(ssCurrentIdx);
 }
 
 
 function ssBeginPreload(){
   if(ssPreloadStarted) return;
   ssPreloadStarted = true;
-  for(var i = 0; i < DATA.introFrames.length; i++){ ssGetImage(i); }
+  for(var i = 0; i < ssFrames.length; i++){ ssGetImage(i); }
 }
 
 
 function renderIntroFrameStory(){
   var sec = document.getElementById('intro-video');
   if(!sec) return;
-  if(DATA.introFrames.length > 0){
+  ssFrames = ssPickFrames();
+  ssIsMobileMode = isMobileViewport();
+  if(ssFrames.length > 0){
     sec.style.display = '';
     ssImgs = [];
     ssLastGoodIdx = -1;
     ssPreloadStarted = false;
-    ssTargetIdx = 0;
-    ssDisplayIdx = 0;
+    ssCurrentIdx = 0;
     if(ssCanvas) ssCanvas.classList.remove('ready');
     ssResizeCanvas();
     ssComputeTrackHeight();
     ssDraw(0);
+    ssBeginPreload(); // start fetching every frame right away — matches the reference, don't wait on the intersection observer for a set that's already at the top of the page
   } else {
     sec.style.display = 'none';
   }
@@ -3481,9 +3741,16 @@ function initIntroFrameStory(){
   if(ssInited) return;
   ssInited = true;
   window.addEventListener('resize', function(){
+    // If the viewport crossed the mobile/desktop breakpoint (phone
+    // rotated, or a desktop window resized past it), re-pick the right
+    // frame set instead of just resizing the canvas.
+    if(isMobileViewport() !== ssIsMobileMode){ renderIntroFrameStory(); }
+    if(isMobileViewport() !== _svIsMobileMode){ renderStoryVideoSection(); }
     ssResizeCanvas();
     ssComputeTrackHeight();
     ssOnScroll();
+    var sv = document.getElementById('story-video');
+    if(sv && sv.style.display !== 'none') sv.style.height = window.innerHeight + 'px';
   });
   var ssTicking = false;
   window.addEventListener('scroll', function(){
@@ -3492,6 +3759,11 @@ function initIntroFrameStory(){
       requestAnimationFrame(function(){ ssOnScroll(); ssTicking = false; });
     }
   }, { passive:true });
+  window.addEventListener('load', function(){
+    ssResizeCanvas();
+    ssComputeTrackHeight();
+    ssOnScroll();
+  });
   var sec = document.getElementById('intro-video');
   if(sec && 'IntersectionObserver' in window){
     var ssObs = new IntersectionObserver(function(entries){
@@ -3521,9 +3793,59 @@ function setupAutoplayVideo(video){
     video.classList.add('ready');
   });
   video.addEventListener('canplay', function(){
+    if(!heroInViewport) return;
     var p = video.play();
     if(p && p.catch) p.catch(function(){ /* autoplay blocked — user can hit play via browser controls if ever shown */ });
   });
+}
+
+/* ---- Every video that can live in the hero (background video, the
+   hero-visual photo/video card, and the celebration theme video) only
+   plays while the hero section is actually in the viewport — pauses the
+   moment it scrolls out, and picks back up right where it left off
+   (not a restart) the moment the hero scrolls back into view. Same
+   pattern already used for the story-video section further down the
+   page. ---- */
+
+var heroInViewport = true;
+var _heroVidObs = null;
+
+function heroVideoCandidates(){
+  return [
+    document.getElementById('hero-video'),
+    document.getElementById('heroVisualVideo'),
+    document.getElementById('themeHeroVideo')
+  ].filter(function(v){ return v && v.getAttribute('src'); });
+}
+
+function playHeroVideos(){
+  heroVideoCandidates().forEach(function(v){
+    if(v.paused){
+      var p = v.play();
+      if(p && p.catch) p.catch(function(){});
+    }
+  });
+}
+
+function pauseHeroVideos(){
+  heroVideoCandidates().forEach(function(v){
+    if(!v.paused) v.pause();
+  });
+}
+
+function observeHeroVideos(){
+  var hero = document.getElementById('hero');
+  if(!hero) return;
+  if(!('IntersectionObserver' in window)){ heroInViewport = true; return; }
+  if(_heroVidObs) _heroVidObs.disconnect();
+  _heroVidObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      heroInViewport = entry.isIntersecting;
+      if(entry.isIntersecting){ playHeroVideos(); }
+      else { pauseHeroVideos(); }
+    });
+  }, { threshold:0.2 });
+  _heroVidObs.observe(hero);
 }
 
 /* ---- Sound starts muted (browsers require that for autoplay — no way
@@ -3615,6 +3937,32 @@ function syncHeroVideoFromCloud(){
 }
 
 
+function heroVisualPointerPublicUrl(){
+  if(!sbClient) return null;
+  var r = sbClient.storage.from(SUPABASE_BUCKET).getPublicUrl('hero-visual/current.json');
+  return r && r.data ? r.data.publicUrl : null;
+}
+
+
+function syncHeroVisualFromCloud(){
+  if(!sbClient) return;
+  var url = heroVisualPointerPublicUrl();
+  if(!url) return;
+  fetch(url + '?t=' + Date.now(), { cache:'no-store' })
+    .then(function(res){ return res.ok ? res.json() : null; })
+    .then(function(pointer){
+      if(pointer && pointer.mode){
+        DATA.heroVisual.mode = pointer.mode;
+        DATA.heroVisual.photoUrl = pointer.photoUrl || '';
+        DATA.heroVisual.videoUrl = pointer.videoUrl || '';
+        saveData();
+        applyHeroVisual();
+      }
+    })
+    .catch(function(){ /* no pointer yet — stay on default placeholder, expected pre-launch */ });
+}
+
+
 function storyVideoPointerPublicUrl(){
   if(!sbClient) return null;
   var r = sbClient.storage.from(SUPABASE_BUCKET).getPublicUrl('story-video/current.json');
@@ -3631,6 +3979,7 @@ function syncStoryVideoFromCloud(){
     .then(function(pointer){
       if(pointer){
         DATA.storyVideo.videoUrl = pointer.videoUrl || '';
+        DATA.storyVideo.videoUrlMobile = pointer.videoUrlMobile || '';
         saveData();
         renderStoryVideoSection();
       }
@@ -3655,6 +4004,7 @@ function syncIntroFramesFromCloud(){
     .then(function(pointer){
       if(pointer && Array.isArray(pointer.frames)){
         DATA.introFrames = pointer.frames;
+        DATA.introFramesMobile = Array.isArray(pointer.framesMobile) ? pointer.framesMobile : [];
         saveData();
         renderIntroFrameStory();
       }
@@ -3734,58 +4084,8 @@ function initMagneticButtons(){
   });
 }
 
-/* ---- Subtle mouse-tracked parallax on the hero's copper archway scene.
-   Different elements drift at different depths for a light sense of 3D —
-   kept to a max of ~16px so it reads as depth, not a gimmick. ---- */
-
-function initHeroSceneParallax(){
-  var scene = document.querySelector('.hero-scene');
-  if(!scene) return;
-  if(window.matchMedia('(hover:none), (pointer:coarse)').matches) return;
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  /* Only elements with no competing keyframe animation get the parallax
-     translate applied directly — spheres/card/arrow already animate their
-     own transform for the idle float, so a second transform source would
-     fight the keyframes each frame. */
-  var layers = [
-    { el: scene.querySelector('.hs-arch-front'), depth: 9 },
-    { el: scene.querySelector('.hs-arch-back'), depth: 5 },
-    { el: scene.querySelector('.hs-ring-a'), depth: 14 },
-    { el: scene.querySelector('.hs-ring-b'), depth: 18 },
-    { el: scene.querySelector('.hs-dots'), depth: 12 },
-    { el: scene.querySelector('.hs-glow'), depth: 3 },
-    { el: scene.querySelector('.hs-ground'), depth: 4 }
-  ].filter(function(l){ return l.el; });
-
-  var tx = 0, ty = 0, cx = 0, cy = 0, raf = null;
-  var hero = document.getElementById('hero');
-  if(!hero) return;
-
-  hero.addEventListener('mousemove', function(e){
-    var r = hero.getBoundingClientRect();
-    tx = ((e.clientX - r.left) / r.width - 0.5) * 2;
-    ty = ((e.clientY - r.top) / r.height - 0.5) * 2;
-    if(!raf) raf = requestAnimationFrame(tick);
-  });
-  hero.addEventListener('mouseleave', function(){ tx = 0; ty = 0; if(!raf) raf = requestAnimationFrame(tick); });
-
-  function tick(){
-    cx += (tx - cx) * 0.08;
-    cy += (ty - cy) * 0.08;
-    layers.forEach(function(l){
-      var x = (cx * l.depth).toFixed(2);
-      var y = (cy * l.depth * 0.7).toFixed(2);
-      l.el.style.setProperty('--hp-x', x + 'px');
-      l.el.style.setProperty('--hp-y', y + 'px');
-    });
-    if(Math.abs(cx - tx) > 0.001 || Math.abs(cy - ty) > 0.001){
-      raf = requestAnimationFrame(tick);
-    } else {
-      raf = null;
-    }
-  }
-}
+/* initHeroSceneParallax() removed along with the copper archway markup/CSS —
+   the hero-scene now shows an admin-set photo/video instead. */
 
 /* initEmberField() function removed along with the .ember-field markup/CSS above. */
 
