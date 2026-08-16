@@ -2597,6 +2597,7 @@ document.addEventListener('DOMContentLoaded', function(){
   initContactForm();
   initHeroKickerPulseFix();
   initSupabase();
+  recordSiteVisit();
   initHeroVideoPlayback();
   initHeroSoundToggle();
   initSpotlightCards();
@@ -3916,6 +3917,42 @@ function initSupabase(){
     try{ sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); }
     catch(e){ sbClient = null; }
   }
+}
+
+/* ---- Traffic tracking — writes one +1 to analytics/traffic.json per
+   browser tab session (sessionStorage guards against a single visitor
+   inflating the count by refreshing repeatedly). Stores day-keyed
+   totals only (not raw per-visit logs), so the file stays tiny forever
+   no matter how much traffic the site gets. Same read-modify-write
+   pattern as leads.json. Silently does nothing if Supabase isn't
+   connected — never blocks or slows down the page for visitors. ---- */
+
+function todayDateKey(){
+  var d = new Date();
+  var y = d.getFullYear();
+  var m = String(d.getMonth()+1).padStart(2,'0');
+  var day = String(d.getDate()).padStart(2,'0');
+  return y+'-'+m+'-'+day;
+}
+
+function recordSiteVisit(){
+  if(!sbClient) return;
+  try{
+    if(sessionStorage.getItem('hanuman_visit_logged')) return;
+    sessionStorage.setItem('hanuman_visit_logged', '1');
+  }catch(e){ /* private browsing etc — still record the visit */ }
+  var todayKey = todayDateKey();
+  var r = sbClient.storage.from(SUPABASE_BUCKET).getPublicUrl('analytics/traffic.json');
+  var url = r && r.data ? r.data.publicUrl : null;
+  var fetchExisting = url
+    ? fetch(url + '?t=' + Date.now(), { cache:'no-store' }).then(function(res){ return res.ok ? res.json() : {}; }).catch(function(){ return {}; })
+    : Promise.resolve({});
+  fetchExisting.then(function(data){
+    var counts = (data && typeof data === 'object' && !Array.isArray(data)) ? data : {};
+    counts[todayKey] = (counts[todayKey] || 0) + 1;
+    var blob = new Blob([JSON.stringify(counts)], { type:'application/json' });
+    return sbClient.storage.from(SUPABASE_BUCKET).upload('analytics/traffic.json', blob, { cacheControl:'0', upsert:true });
+  }).catch(function(err){ console.error('Visit tracking failed', err); });
 }
 
 
