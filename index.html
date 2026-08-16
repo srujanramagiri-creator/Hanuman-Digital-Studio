@@ -797,6 +797,10 @@ html[data-celebration="independence"] .theme-chakra{ display:block; }
 .reveal-stagger.in > *:nth-child(4){ transition-delay:.32s; }
 .reveal-stagger.in > *:nth-child(5){ transition-delay:.41s; }
 .reveal-stagger.in > *:nth-child(6){ transition-delay:.5s; }
+.reveal-stagger.in > *:nth-child(7){ transition-delay:.59s; }
+.reveal-stagger.in > *:nth-child(8){ transition-delay:.68s; }
+.reveal-stagger.in > *:nth-child(9){ transition-delay:.77s; }
+.reveal-stagger.in > *:nth-child(10){ transition-delay:.86s; }
 
 /* ---- About / value strip ---- */
 .value-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden; }
@@ -1146,6 +1150,47 @@ html[data-celebration="independence"] .theme-chakra{ display:block; }
 .estimator-visual .price-preview .sub{ margin-top:8px; font-size:.85rem; color:var(--text-dimmer); }
 
 /* ========================================================================
+   FAQ
+   ======================================================================== */
+.faq-list{ display:flex; flex-direction:column; gap:14px; }
+.faq-item{
+  border:1px solid var(--border); border-radius:var(--radius-md);
+  background:var(--bg-card); overflow:hidden;
+  transition:border-color var(--dur-fast);
+}
+.faq-item.open{ border-color:var(--border-strong); }
+.faq-q{
+  width:100%; display:flex; align-items:center; justify-content:space-between; gap:20px;
+  padding:24px 28px; background:none; border:none; text-align:left; cursor:pointer;
+  font-family:var(--font-display); font-weight:700; font-size:1.05rem; color:var(--text);
+}
+.faq-q:hover span:first-child{ color:var(--accent); }
+.faq-q span:first-child{ transition:color var(--dur-fast); }
+.faq-plus{
+  width:32px; height:32px; border-radius:50%; position:relative; flex:none;
+  background:linear-gradient(155deg, color-mix(in srgb, var(--ember) 15%, var(--bg-card)) 0%, color-mix(in srgb, var(--amber) 9%, var(--bg-card)) 100%);
+  border:1px solid color-mix(in srgb, var(--accent) 26%, var(--border));
+  box-shadow:0 6px 14px -10px color-mix(in srgb, var(--accent) 55%, transparent), inset 0 1px 0 rgba(255,255,255,.55);
+  transition:box-shadow var(--dur-fast);
+}
+.faq-plus::before, .faq-plus::after{
+  content:''; position:absolute; top:50%; left:50%; background:var(--accent);
+  transform:translate(-50%,-50%);
+}
+.faq-plus::before{ width:12px; height:1.6px; }
+.faq-plus::after{ width:1.6px; height:12px; transition:transform .3s var(--ease-out); }
+.faq-item.open .faq-plus::after{ transform:translate(-50%,-50%) scaleY(0); }
+.faq-item.open .faq-plus{ box-shadow:0 8px 18px -10px color-mix(in srgb, var(--accent) 65%, transparent), inset 0 1px 0 rgba(255,255,255,.55); }
+.faq-a-wrap{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .4s var(--ease-out); }
+.faq-item.open .faq-a-wrap{ grid-template-rows:1fr; }
+.faq-a-inner{ overflow:hidden; }
+.faq-a{ padding:0 60px 24px 28px; color:var(--text-dim); font-size:.96rem; line-height:1.7; max-width:66ch; }
+@media (max-width:760px){
+  .faq-q{ padding:20px; font-size:.98rem; }
+  .faq-a{ padding:0 20px 20px; }
+}
+
+/* ========================================================================
    CONTACT
    ======================================================================== */
 .contact-grid{ display:grid; grid-template-columns:1fr 1.05fr; gap:60px; }
@@ -1427,6 +1472,7 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
       <a href="#services">AI Tools</a>
       <a href="#about">About</a>
       <a href="#process">Process</a>
+      <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
     </nav>
     <div class="nav-right">
@@ -1443,6 +1489,7 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
   <a href="#services">AI Tools</a>
   <a href="#about">About</a>
   <a href="#process">Process</a>
+  <a href="#faq">FAQ</a>
   <a href="#contact">Contact</a>
   <a href="#contact" class="btn btn-primary mobile-menu-cta">Let's build together<span class="arr">↗</span></a>
 </div>
@@ -1532,6 +1579,20 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
     <span><i></i>Web Apps</span><span><i></i>3D &amp; WebGL</span><span><i></i>Admin Panels</span><span><i></i>AI Chatbots</span><span><i></i>Booking Systems</span><span><i></i>E-Commerce</span>
   </div>
 </div>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">FAQ</span>
+        <h2 class="section-title">Questions people<br>usually ask.</h2>
+      </div>
+      <p class="section-sub">Can't find your answer here? Drop it straight into the chat with IRA or reach out below.</p>
+    </div>
+    <div class="faq-list reveal-stagger" id="faqList"></div>
+  </div>
+</section>
 
 <!-- VALUE -->
 <section id="about">
@@ -1970,6 +2031,14 @@ var DEFAULT_DATA = {
     videos: {}
   },
   mediaVideos: [],
+  faqs: [
+    { id: 1, q: "How long does a typical project take?", a: "Most single-page sites launch in 1–3 weeks from kickoff. Larger builds — admin panels, e-commerce, or AI-powered tools — usually take 4–6 weeks. You'll get a realistic timeline before any work starts, not after." },
+    { id: 2, q: "Do I need to write the content myself?", a: "Not at all. Send rough notes, photos, or even a WhatsApp voice note and I'll shape it into finished copy. If you already have brand content ready, that works too — it just speeds things along." },
+    { id: 3, q: "Can I update the website myself after it's live?", a: "Yes. Every site ships with its own admin panel, so you can edit text, swap photos, and manage projects or products yourself — no code, no waiting on a developer for routine changes." },
+    { id: 4, q: "Is hosting and the domain included in the price?", a: "The quoted price covers design and development. Domain and hosting are separate, ongoing costs — I'll help you pick sensible options and walk you through exactly what they cost before you commit to anything." },
+    { id: 5, q: "Do you build online stores, or only info sites?", a: "Both. From simple catalog or lead-generation sites up to full e-commerce with product galleries, stock tracking, and order handling — all backed by a real database, not just static pages." },
+    { id: 6, q: "What happens if I need changes after launch?", a: "You keep direct access to me — no ticket queue, no account manager. Small tweaks usually turn around fast, and bigger feature requests get scoped and quoted individually before any work begins." }
+  ],
   projects: [
     { id: 1, title: "DANAIRA Silks", thumbWord: "DANAIRA", cat: "Luxury E-Commerce · 3D Experience",
       desc: "A cinematic, scroll-driven single-page site for a luxury silk brand, built around a signature animated zari-thread motif that ties every section together.",
@@ -2061,6 +2130,7 @@ function loadData(){
     merged.site = Object.assign({}, merged.site, parsed.site || {});
     merged.siteTheme = Object.assign({}, merged.siteTheme, parsed.siteTheme || {});
     merged.mediaVideos = parsed.mediaVideos || merged.mediaVideos;
+    merged.faqs = (parsed.faqs && parsed.faqs.length) ? parsed.faqs : merged.faqs;
     merged.projects = (parsed.projects && parsed.projects.length) ? parsed.projects : merged.projects;
     return merged;
   }catch(e){ return clone(DEFAULT_DATA); }
@@ -2097,6 +2167,7 @@ function syncSiteDataFromCloud(){
       DATA.siteTheme = cloud.siteTheme || DATA.siteTheme;
       DATA.projects = cloud.projects;
       DATA.mediaVideos = cloud.mediaVideos || DATA.mediaVideos || [];
+      DATA.faqs = (cloud.faqs && cloud.faqs.length) ? cloud.faqs : DATA.faqs;
       localStorage.setItem(STORE_KEY, JSON.stringify(DATA));
       renderAll();
     })
@@ -2213,6 +2284,28 @@ function renderProjects(){
   });
 
   reInitReveal(grid.querySelectorAll('.work-card'));
+}
+
+
+function renderFAQ(){
+  var list = document.getElementById('faqList');
+  if(!list) return;
+  var faqs = DATA.faqs || [];
+  list.innerHTML = faqs.map(function(f){
+    return '' +
+    '<div class="faq-item">' +
+      '<button class="faq-q" type="button" aria-expanded="false">' +
+        '<span>'+escapeHtml(f.q)+'</span>' +
+        '<span class="faq-plus" aria-hidden="true"></span>' +
+      '</button>' +
+      '<div class="faq-a-wrap">' +
+        '<div class="faq-a-inner">' +
+          '<p class="faq-a">'+escapeHtml(f.a)+'</p>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+  initFAQAccordion();
 }
 
 
@@ -2345,6 +2438,7 @@ function renderAll(){
   renderHero();
   renderContact();
   renderProjects();
+  renderFAQ();
   renderBranding();
   renderMediaSection();
   applyCelebrationTheme();
@@ -3188,6 +3282,29 @@ function pushLeadToCloud(fd, channel){
     var blob = new Blob([JSON.stringify(leads)], { type:'application/json' });
     return sbClient.storage.from(SUPABASE_BUCKET).upload('leads/leads.json', blob, { cacheControl:'0', upsert:true });
   }).catch(function(err){ console.error('Lead sync failed', err); });
+}
+
+/* ========================================================================
+   FAQ ACCORDION
+   ======================================================================== */
+function initFAQAccordion(){
+  var items = document.querySelectorAll('.faq-item');
+  items.forEach(function(item){
+    var btn = item.querySelector('.faq-q');
+    if(!btn) return;
+    btn.addEventListener('click', function(){
+      var wasOpen = item.classList.contains('open');
+      items.forEach(function(other){
+        other.classList.remove('open');
+        var b = other.querySelector('.faq-q');
+        if(b) b.setAttribute('aria-expanded', 'false');
+      });
+      if(!wasOpen){
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
 }
 
 function initContactForm(){
