@@ -96,34 +96,11 @@
   color-scheme: light;
 }
 
-/* ---- Dark mode — now the toggle option, not the default. Reuses the
-   original Forge night palette. ---- */
-html.dark{
-  --bg:            var(--obsidian);
-  --bg-alt:        var(--obsidian-2);
-  --bg-card:       var(--surface);
-  --text:          var(--ink);
-  --text-dim:      var(--ink-dim);
-  --text-dimmer:   var(--ink-dimmer);
-  --border:        var(--line);
-  --border-strong: var(--line-strong);
-  --ember:         #ff5a1f;
-  --ember-2:       #ff7a3d;
-  --amber:         #ffa53e;
-  --amber-soft:    #ffcb8a;
-  --sindoor:       #e8380d;
-  --accent:        var(--ember);
-  --accent-2:      var(--amber);
-  --on-accent:     #0a0806;
-  --grad-glow:  radial-gradient(circle, rgba(255,90,31,0.35) 0%, rgba(255,90,31,0) 70%);
-  color-scheme: dark;
-}
-
 /* ========================================================================
-   CELEBRATION THEMES — admin-selectable seasonal palette swaps. Placed
-   after html.dark so these win regardless of light/dark mode; only the
-   accent trio (ember/amber/sindoor) + on-accent + glow are re-themed,
-   everything else (backgrounds, layout) stays governed by light/dark.
+   CELEBRATION THEMES — admin-selectable seasonal palette swaps. Only the
+   accent trio (ember/amber/sindoor) + on-accent + glow are re-themed;
+   everything else (backgrounds, layout) stays fixed to the Warm Ivory
+   Forge palette above.
    ======================================================================== */
 html[data-celebration="independence"]{
   /* Indian flag colors — no blue anywhere (that was the earlier bug:
@@ -255,8 +232,6 @@ h1,h2,h3,h4{ font-family:var(--font-display); font-weight:700; letter-spacing:-0
   mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
-html.dark .grain{ opacity:.035; }
-
 .vignette{
   position:fixed; inset:0; pointer-events:none; z-index:1;
   background:radial-gradient(ellipse at 50% 0%, rgba(196,73,26,0.05), transparent 55%);
@@ -418,18 +393,6 @@ html.dark .grain{ opacity:.035; }
 .nav-links a:hover::after{ width:100%; }
 
 .nav-right{ display:flex; align-items:center; gap:14px; }
-
-.theme-toggle{
-  width:44px; height:44px; border-radius:50%;
-  border:1px solid var(--border-strong);
-  display:flex; align-items:center; justify-content:center;
-  position:relative; transition:border-color var(--dur-fast), transform var(--dur-fast);
-}
-.theme-toggle:hover{ border-color:var(--accent); transform:rotate(20deg); }
-.theme-toggle svg{ width:18px; height:18px; stroke:var(--text); }
-.theme-toggle .moon{ display:none; }
-html.dark .theme-toggle .sun{ display:none; }
-html.dark .theme-toggle .moon{ display:block; }
 
 .btn{
   display:inline-flex; align-items:center; justify-content:center; gap:9px;
@@ -614,9 +577,8 @@ html[data-celebration="independence"] #hero-bg{
   background:linear-gradient(180deg, transparent 78%, var(--bg) 100%);
 }
 /* When a video is playing behind the hero, force the dark Forge palette
-   locally — regardless of light/dark mode — so theme colors never wash
-   out or lose contrast against the footage. --ink/--line/--surface stay
-   fixed to their dark values in both themes, so they're safe to borrow. */
+   locally so text/borders stay legible over the footage, regardless of
+   the light background used everywhere else on the site. */
 #hero.video-active{
   --text: var(--ink);
   --text-dim: var(--ink-dim);
@@ -798,49 +760,9 @@ html[data-celebration="independence"] #hero-bg{
    ======================================================================== */
 section{ position:relative; padding:150px 0; overflow:hidden; }
 
-/* ---- Sitewide ambient background — fixed mesh-gradient glows + a
-   faint premium grid texture that sit behind EVERY section at once.
-   The old .bg-orb pairs below are scoped per-section and were getting
-   clipped by that section's own overflow, so most of the page still
-   read flat. This layer is position:fixed (viewport-relative, immune
-   to any section's overflow) so the depth/glow never disappears no
-   matter where you've scrolled to. ---- */
-.ambient-bg{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
-.ambient-bg i{ position:absolute; border-radius:50%; filter:blur(70px); display:block; opacity:.32; }
-.ambient-bg i.g1{
-  width:52vw; height:52vw; max-width:760px; max-height:760px;
-  top:-16vw; left:-12vw;
-  background:radial-gradient(circle, color-mix(in srgb, var(--ember) 55%, transparent) 0%, transparent 68%);
-  animation:ambFloat1 36s ease-in-out infinite;
-}
-.ambient-bg i.g2{
-  width:44vw; height:44vw; max-width:640px; max-height:640px;
-  top:40vh; right:-14vw;
-  background:radial-gradient(circle, color-mix(in srgb, var(--amber) 50%, transparent) 0%, transparent 68%);
-  animation:ambFloat2 42s ease-in-out infinite;
-}
-.ambient-bg i.g3{
-  width:48vw; height:48vw; max-width:700px; max-height:700px;
-  bottom:-14vw; left:22vw;
-  background:radial-gradient(circle, color-mix(in srgb, var(--sindoor) 40%, transparent) 0%, transparent 70%);
-  animation:ambFloat3 48s ease-in-out infinite;
-}
-html.dark .ambient-bg i{ opacity:.5; filter:blur(90px); }
-@keyframes ambFloat1{ 0%,100%{ transform:translate(0,0) scale(1); } 50%{ transform:translate(4vw,3vw) scale(1.08); } }
-@keyframes ambFloat2{ 0%,100%{ transform:translate(0,0) scale(1); } 50%{ transform:translate(-3vw,-4vw) scale(1.1); } }
-@keyframes ambFloat3{ 0%,100%{ transform:translate(0,0) scale(1); } 50%{ transform:translate(3vw,-3vw) scale(1.05); } }
-@media (prefers-reduced-motion: reduce){ .ambient-bg i{ animation:none; } }
-@media (max-width:760px){ .ambient-bg i{ filter:blur(50px); } }
+/* ambient-bg (sitewide glow layer) removed — user found the recurring
+   top-left/bottom-right blob wash too heavy across every section. */
 
-/* ---- Independence Day extras: g3's glow becomes soft white/cream (so
-   the ambient wash reads as genuine saffron+white+green, not just two
-   greens), plus a large, slowly-rotating 24-spoke Ashoka Chakra
-   watermark sitting quietly behind the hero content. Hidden entirely
-   unless this theme is active; very low opacity so it's felt rather
-   than shouted, and reduced-motion users get it fully static. ---- */
-html[data-celebration="independence"] .ambient-bg i.g3{
-  background:radial-gradient(circle, rgba(255,255,255,.55) 0%, transparent 70%);
-}
 .theme-chakra{
   display:none; position:fixed; z-index:0; pointer-events:none;
   top:50%; left:50%; width:min(78vw,900px); height:min(78vw,900px);
@@ -850,7 +772,6 @@ html[data-celebration="independence"] .ambient-bg i.g3{
   opacity:.07;
   animation:chakraSpin 90s linear infinite;
 }
-html.dark .theme-chakra{ opacity:.1; }
 html[data-celebration="independence"] .theme-chakra{ display:block; }
 @keyframes chakraSpin{ from{ transform:translate(-50%,-50%) rotate(0deg); } to{ transform:translate(-50%,-50%) rotate(360deg); } }
 @media (prefers-reduced-motion: reduce){ .theme-chakra{ animation:none; } }
@@ -859,26 +780,6 @@ html[data-celebration="independence"] .theme-chakra{ display:block; }
 /* ambient-grid removed — user found the grid-line texture too
    "boxy"; the mesh glows above are kept but the structural lines
    are gone. */
-
-/* ---- Ambient background orbs — soft drifting color behind section
-   content, breaking up the flat dark background as you scroll ---- */
-.bg-orb{ position:absolute; border-radius:50%; pointer-events:none; z-index:0; will-change:transform; }
-.bg-orb.o1{
-  width:520px; height:520px; top:-160px; left:-180px;
-  background:radial-gradient(circle, rgba(196,73,26,.22) 0%, transparent 70%);
-  animation:orbFloat1 24s ease-in-out infinite;
-}
-.bg-orb.o2{
-  width:460px; height:460px; bottom:-140px; right:-160px;
-  background:radial-gradient(circle, rgba(184,121,30,.22) 0%, transparent 70%);
-  animation:orbFloat2 28s ease-in-out infinite;
-}
-html.dark .bg-orb.o1{ background:radial-gradient(circle, rgba(255,90,31,.28) 0%, transparent 70%); }
-html.dark .bg-orb.o2{ background:radial-gradient(circle, rgba(255,150,50,.24) 0%, transparent 70%); }
-@keyframes orbFloat1{ 0%,100%{ transform:translate(0,0) scale(1); } 50%{ transform:translate(50px,35px) scale(1.12); } }
-@keyframes orbFloat2{ 0%,100%{ transform:translate(0,0) scale(1); } 50%{ transform:translate(-40px,-30px) scale(1.08); } }
-@media (prefers-reduced-motion: reduce){ .bg-orb{ animation:none; } }
-@media (max-width:760px){ .bg-orb{ opacity:.6; } }
 
 /* ---- Floating embers removed per feedback — the small red dots
    rising from the bottom of every section were disliked. .ember-field
@@ -925,9 +826,16 @@ html.dark .bg-orb.o2{ background:radial-gradient(circle, rgba(255,150,50,.24) 0%
 .service-card:hover{ transform:translateY(-6px); border-color:var(--border-strong); }
 .service-card:hover::before{ opacity:1; }
 .service-icon{
-  width:48px; height:48px; border-radius:13px; background:var(--surface-2);
+  width:52px; height:52px; border-radius:15px;
+  background:linear-gradient(155deg, color-mix(in srgb, var(--ember) 15%, var(--bg-card)) 0%, color-mix(in srgb, var(--amber) 9%, var(--bg-card)) 100%);
   display:flex; align-items:center; justify-content:center; margin-bottom:22px;
-  border:1px solid var(--border);
+  border:1px solid color-mix(in srgb, var(--accent) 26%, var(--border));
+  box-shadow:0 10px 22px -12px color-mix(in srgb, var(--accent) 55%, transparent), inset 0 1px 0 rgba(255,255,255,.55);
+  transition:transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast);
+}
+.service-card:hover .service-icon{
+  transform:translateY(-3px);
+  box-shadow:0 14px 28px -12px color-mix(in srgb, var(--accent) 65%, transparent), inset 0 1px 0 rgba(255,255,255,.55);
 }
 .service-icon svg{ width:22px; height:22px; stroke:var(--accent); }
 .service-card h3{ font-size:1.18rem; margin-bottom:10px; }
@@ -1250,8 +1158,16 @@ html.dark .bg-orb.o2{ background:radial-gradient(circle, rgba(255,150,50,.24) 0%
 }
 .contact-method:hover{ border-color:var(--border-strong); transform:translateX(4px); }
 .contact-method .cm-icon{
-  width:46px; height:46px; border-radius:12px; background:var(--surface-2); border:1px solid var(--border);
+  width:46px; height:46px; border-radius:13px;
+  background:linear-gradient(155deg, color-mix(in srgb, var(--ember) 15%, var(--bg-card)) 0%, color-mix(in srgb, var(--amber) 9%, var(--bg-card)) 100%);
+  border:1px solid color-mix(in srgb, var(--accent) 26%, var(--border));
+  box-shadow:0 8px 18px -12px color-mix(in srgb, var(--accent) 55%, transparent), inset 0 1px 0 rgba(255,255,255,.55);
   display:flex; align-items:center; justify-content:center; flex:none;
+  transition:transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast);
+}
+.contact-method:hover .cm-icon{
+  transform:translateY(-2px);
+  box-shadow:0 12px 24px -12px color-mix(in srgb, var(--accent) 65%, transparent), inset 0 1px 0 rgba(255,255,255,.55);
 }
 .contact-method .cm-icon svg{ width:20px; height:20px; stroke:var(--accent); }
 .contact-method > span:last-child{ min-width:0; flex:1 1 auto; }
@@ -1483,7 +1399,6 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
 </style>
 </head>
 <body>
-<div class="ambient-bg"><i class="g1"></i><i class="g2"></i><i class="g3"></i></div>
 <div class="theme-chakra" id="themeChakra"></div>
 <div class="grain"></div>
 <div class="vignette"></div>
@@ -1515,10 +1430,6 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
       <a href="#contact">Contact</a>
     </nav>
     <div class="nav-right">
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark or light mode">
-        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      </button>
       <a href="#contact" class="btn btn-primary btn-sm nav-cta">Let's build together<span class="arr">↗</span></a>
       <button class="burger" id="burgerBtn" aria-label="Open menu"><span></span><span></span><span></span></button>
     </div>
@@ -1624,7 +1535,6 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
 
 <!-- VALUE -->
 <section id="about">
-  <div class="bg-orb o1"></div><div class="bg-orb o2"></div>
   <div class="container">
     <div class="section-head reveal">
       <div>
@@ -1655,7 +1565,6 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
 
 <!-- SERVICES -->
 <section id="services">
-  <div class="bg-orb o1"></div><div class="bg-orb o2"></div>
   <div class="container">
     <div class="section-head reveal">
       <div>
@@ -1706,7 +1615,6 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
 
 <!-- WORK -->
 <section id="work">
-  <div class="bg-orb o1"></div><div class="bg-orb o2"></div>
   <div class="container">
     <div class="section-head reveal">
       <div>
@@ -1721,7 +1629,6 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
 
 <!-- MEDIA / VIDEOS -->
 <section id="media" style="display:none;">
-  <div class="bg-orb o1"></div><div class="bg-orb o2"></div>
   <div class="container">
     <div class="section-head reveal">
       <div>
@@ -1736,7 +1643,6 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
 
 <!-- PROCESS -->
 <section id="process">
-  <div class="bg-orb o1"></div><div class="bg-orb o2"></div>
   <div class="container">
     <div class="section-head reveal">
       <div>
@@ -1767,7 +1673,6 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
 
 <!-- ESTIMATOR -->
 <section id="estimator">
-  <div class="bg-orb o1"></div><div class="bg-orb o2"></div>
   <div class="container">
     <div class="section-head reveal">
       <div>
@@ -1798,7 +1703,6 @@ footer{ padding:70px 0 34px; border-top:1px solid var(--border); }
 
 <!-- CONTACT -->
 <section id="contact">
-  <div class="bg-orb o1"></div><div class="bg-orb o2"></div>
   <div class="container">
     <div class="section-head reveal">
       <div>
@@ -2133,7 +2037,6 @@ var DEFAULT_DATA = {
 
 var STORE_KEY = 'hanuman_site_data_v1';
 
-var THEME_KEY = 'hanuman_theme';
 
 var DATA = loadData();
 
@@ -2588,7 +2491,6 @@ document.addEventListener('DOMContentLoaded', function(){
   document.getElementById('chatToggleLogo').src = IRA_LOGO_DATA_URI;
   document.getElementById('chatHeadLogo').src = IRA_LOGO_DATA_URI;
   renderAll();
-  initTheme();
   splitTitleWords();
   initPreloader();
   initNavScroll();
@@ -2624,28 +2526,6 @@ function initHeroKickerPulseFix(){
     var i = document.createElement('i');
     k.prepend(i);
   }
-}
-
-/* ---- Theme ---- */
-
-function initTheme(){
-  var saved = localStorage.getItem(THEME_KEY);
-  if(saved === 'dark') document.documentElement.classList.add('dark');
-  updateThemeColorMeta();
-  var btn = document.getElementById('themeToggle');
-  btn.addEventListener('click', function(){
-    document.documentElement.classList.toggle('dark');
-    var isDark = document.documentElement.classList.contains('dark');
-    localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light');
-    updateThemeColorMeta();
-  });
-}
-
-function updateThemeColorMeta(){
-  var meta = document.getElementById('themeColorMeta');
-  if(!meta) return;
-  var isDark = document.documentElement.classList.contains('dark');
-  meta.setAttribute('content', isDark ? '#0a0806' : '#f6f0e6');
 }
 
 /* ---- Preloader ---- */
@@ -2818,7 +2698,7 @@ var PRIVACY_POLICY_HTML =
   '<ul>' +
     '<li><b>Contact form / project inquiry:</b> the name, phone, email, project type, and project details you enter are used only to open a pre-filled WhatsApp message or email draft on your own device. This website does not save that submission to any server or database.</li>' +
     '<li><b>AI chat &amp; estimator:</b> if you use the on-site AI assistant, whatever you type is sent to our backend, which forwards it to a third-party AI model provider to generate a reply. We don’t attach your name or contact details to that conversation unless you type them into the chat yourself, and we don’t build a permanent, identity-linked record of individual chats.</li>' +
-    '<li><b>Local storage:</b> your browser may cache site content and your light/dark theme preference locally, purely so the site loads faster on repeat visits. This stays on your device — it isn’t personal data and isn’t sent anywhere.</li>' +
+    '<li><b>Local storage:</b> your browser may cache site content locally, purely so the site loads faster on repeat visits. This stays on your device — it isn’t personal data and isn’t sent anywhere.</li>' +
   '</ul>' +
 
   '<h3>What we don’t do</h3>' +
